@@ -4,39 +4,37 @@
 </div>
 
 <div class="flex justify-center">
-    <div class="w-72 bg-forest-darker rounded-2xl border border-emerald-500/20 overflow-hidden">
-        <div class="bg-gradient-to-b from-emerald-500/20 to-transparent pt-8 pb-4 text-center">
-            <span class="text-6xl">&#x1F4E1;</span>
+    <div class="w-72 bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+        <div class="text-center mb-4">
+            <span class="text-5xl">&#x1F4E1;</span>
         </div>
-        <div class="px-6 pb-6">
-            <h1 class="text-xl font-bold text-white text-center mb-1">{{.Data.Source.Name}}</h1>
-            <div class="text-xs text-emerald-400 text-center mb-4">Source</div>
-            <div class="border-t border-emerald-500/10 pt-4 space-y-3 text-sm">
-                <div class="flex justify-between">
-                    <span class="text-gray-500">RAM</span>
-                    <span class="text-white font-medium">{{formatBytes .Data.Source.RAMAllocated}}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-500">Land</span>
-                    <span class="text-white font-medium">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Source.LandID}}{{end}}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-500">Started</span>
-                    <span class="text-white font-medium">{{timeAgo .Data.Source.StartedAt}}</span>
-                </div>
-                {{if .Data.Source.SourceType}}
-                <div class="flex justify-between">
-                    <span class="text-gray-500">Type</span>
-                    <span class="text-emerald-400 font-medium">{{.Data.Source.SourceType}}</span>
-                </div>
-                {{end}}
-                {{if .Data.Source.Publishes}}
-                <div class="border-t border-emerald-500/10 pt-3">
-                    <span class="text-gray-500 text-xs">Publishes</span>
-                    <div class="text-emerald-400 font-mono text-xs mt-0.5">{{.Data.Source.Publishes}}</div>
-                </div>
-                {{end}}
+        <h1 class="text-lg font-bold text-white text-center mb-1">{{.Data.Source.Name}}</h1>
+        <div class="text-xs text-emerald-400 text-center mb-4">Source</div>
+        <div class="border-t border-forest-green/10 pt-4 space-y-3 text-sm">
+            <div class="flex justify-between">
+                <span class="text-gray-500">RAM</span>
+                <span class="text-white">{{formatBytes .Data.Source.RAMAllocated}}</span>
             </div>
+            <div class="flex justify-between">
+                <span class="text-gray-500">Land</span>
+                <span class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Source.LandID}}{{end}}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="text-gray-500">Started</span>
+                <span class="text-white">{{timeAgo .Data.Source.StartedAt}}</span>
+            </div>
+            {{if .Data.Source.SourceType}}
+            <div class="flex justify-between">
+                <span class="text-gray-500">Type</span>
+                <span class="text-emerald-400">{{.Data.Source.SourceType}}</span>
+            </div>
+            {{end}}
+            {{if .Data.Source.Publishes}}
+            <div class="border-t border-forest-green/10 pt-3">
+                <span class="text-gray-500 text-xs">Publishes</span>
+                <div class="text-emerald-400 font-mono text-xs mt-0.5">{{.Data.Source.Publishes}}</div>
+            </div>
+            {{end}}
         </div>
     </div>
 </div>
