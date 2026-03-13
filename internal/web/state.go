@@ -13,6 +13,8 @@ type ForestState struct {
 	Trees      []ProcessVM       `json:"trees"`
 	Treehouses []TreehouseVM     `json:"treehouses"`
 	Nims       []NimVM           `json:"nims"`
+	Songbirds  []SongbirdVM      `json:"songbirds"`
+	Sources    []SourceVM        `json:"sources"`
 }
 
 type ForestSummary struct {
@@ -24,6 +26,8 @@ type ForestSummary struct {
 	TreeCount         int     `json:"TreeCount"`
 	TreehouseCount    int     `json:"TreehouseCount"`
 	NimCount          int     `json:"NimCount"`
+	SongbirdCount     int     `json:"SongbirdCount"`
+	SourceCount       int     `json:"SourceCount"`
 	TotalRAMAllocated uint64  `json:"TotalRAMAllocated"`
 	Occupancy         float64 `json:"Occupancy"`
 }
@@ -36,8 +40,10 @@ type LandVM struct {
 	GPUVram    uint64      `json:"gpu_vram"`
 	Trees      []ProcessVM `json:"trees"`
 	Treehouses []TreehouseVM `json:"treehouses"`
-	Nims       []NimVM     `json:"nims"`
-	JoinedAt   time.Time   `json:"joined_at"`
+	Nims       []NimVM       `json:"nims"`
+	Songbirds  []SongbirdVM  `json:"songbirds"`
+	Sources    []SourceVM    `json:"sources"`
+	JoinedAt   time.Time     `json:"joined_at"`
 	LastSeen   time.Time   `json:"last_seen"`
 }
 
@@ -46,7 +52,7 @@ func (l *LandVM) HasMana() bool {
 }
 
 func (l *LandVM) ProcessCount() int {
-	return len(l.Trees) + len(l.Treehouses) + len(l.Nims)
+	return len(l.Trees) + len(l.Treehouses) + len(l.Nims) + len(l.Songbirds) + len(l.Sources)
 }
 
 func (l *LandVM) RAMAllocated() uint64 {
@@ -59,6 +65,12 @@ func (l *LandVM) RAMAllocated() uint64 {
 	}
 	for _, n := range l.Nims {
 		total += n.RAMAllocated
+	}
+	for _, s := range l.Songbirds {
+		total += s.RAMAllocated
+	}
+	for _, s := range l.Sources {
+		total += s.RAMAllocated
 	}
 	return total
 }
@@ -88,6 +100,76 @@ type NimVM struct {
 	ProcessVM
 	AIEnabled bool   `json:"ai_enabled"`
 	Model     string `json:"model"`
+}
+
+type SongbirdVM struct {
+	ProcessVM
+	Listens string `json:"listens"`
+}
+
+type SourceVM struct {
+	ProcessVM
+	SourceType string `json:"source_type"`
+	Publishes  string `json:"publishes"`
+}
+
+// FindTree finds a tree by name across all data.
+func (s *ForestState) FindTree(name string) (*ProcessVM, *LandVM) {
+	for i := range s.Trees {
+		if s.Trees[i].Name == name {
+			return &s.Trees[i], s.findLandByID(s.Trees[i].LandID)
+		}
+	}
+	return nil, nil
+}
+
+// FindTreehouse finds a treehouse by name.
+func (s *ForestState) FindTreehouse(name string) (*TreehouseVM, *LandVM) {
+	for i := range s.Treehouses {
+		if s.Treehouses[i].Name == name {
+			return &s.Treehouses[i], s.findLandByID(s.Treehouses[i].LandID)
+		}
+	}
+	return nil, nil
+}
+
+// FindNim finds a nim by name.
+func (s *ForestState) FindNim(name string) (*NimVM, *LandVM) {
+	for i := range s.Nims {
+		if s.Nims[i].Name == name {
+			return &s.Nims[i], s.findLandByID(s.Nims[i].LandID)
+		}
+	}
+	return nil, nil
+}
+
+// FindSongbird finds a songbird by name.
+func (s *ForestState) FindSongbird(name string) (*SongbirdVM, *LandVM) {
+	for i := range s.Songbirds {
+		if s.Songbirds[i].Name == name {
+			return &s.Songbirds[i], s.findLandByID(s.Songbirds[i].LandID)
+		}
+	}
+	return nil, nil
+}
+
+// FindSource finds a source by name.
+func (s *ForestState) FindSource(name string) (*SourceVM, *LandVM) {
+	for i := range s.Sources {
+		if s.Sources[i].Name == name {
+			return &s.Sources[i], s.findLandByID(s.Sources[i].LandID)
+		}
+	}
+	return nil, nil
+}
+
+func (s *ForestState) findLandByID(id string) *LandVM {
+	for i := range s.Lands {
+		if s.Lands[i].ID == id {
+			return &s.Lands[i]
+		}
+	}
+	return nil
 }
 
 // LandHeartbeat matches the payload from land's heartbeat.

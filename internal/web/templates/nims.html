@@ -1,0 +1,40 @@
+{{define "content"}}
+<div class="mb-8">
+    <h1 class="text-2xl font-bold text-white mb-2">&#x1F9D9; Nims</h1>
+    <p class="text-gray-500 text-sm">Business logic handlers — {{if .Data.State}}{{.Data.State.Summary.NimCount}} total{{end}}</p>
+</div>
+
+{{if .Data.State}}
+{{if .Data.State.Nims}}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {{range .Data.State.Nims}}
+    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-life-blue/10 p-5 hover:border-life-blue/30 transition-colors block">
+        <div class="flex items-center gap-2 mb-3">
+            <span class="text-life-blue">&#x1F9D9;</span>
+            <h3 class="font-semibold text-white">{{if .AIEnabled}}&#x2728; {{end}}{{.Name}}</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+            <div>
+                <span class="text-gray-500">RAM</span>
+                <div class="text-white">{{formatBytes .RAMAllocated}}</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Started</span>
+                <div class="text-white">{{timeAgo .StartedAt}}</div>
+            </div>
+        </div>
+        {{if .AIEnabled}}
+        <div class="mt-2">
+            <span class="px-2 py-0.5 rounded-full text-xs bg-purple-500/10 text-purple-400">AI{{if .Model}}: {{.Model}}{{end}}</span>
+        </div>
+        {{end}}
+    </a>
+    {{end}}
+</div>
+{{else}}
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-8 text-center">
+    <p class="text-gray-400">No nims detected.</p>
+</div>
+{{end}}
+{{end}}
+{{end}}

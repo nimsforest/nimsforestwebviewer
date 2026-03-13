@@ -1,0 +1,30 @@
+{{define "content"}}
+<div class="mb-6">
+    <a href="/trees" class="text-forest-green hover:text-forest-green/80 text-sm">&larr; Back to Trees</a>
+</div>
+
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-6">
+    <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl text-forest-green">&#x1F333;</span>
+        <h1 class="text-2xl font-bold text-white">{{.Data.Process.Name}}</h1>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <div>
+            <span class="text-gray-500">Type</span>
+            <div class="text-white">Tree (river data parser)</div>
+        </div>
+        <div>
+            <span class="text-gray-500">RAM Allocated</span>
+            <div class="text-white">{{formatBytes .Data.Process.RAMAllocated}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">Land</span>
+            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Process.LandID}}{{end}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">Started</span>
+            <div class="text-white">{{timeAgo .Data.Process.StartedAt}}</div>
+        </div>
+    </div>
+</div>
+{{end}}

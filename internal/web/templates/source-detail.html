@@ -1,0 +1,42 @@
+{{define "content"}}
+<div class="mb-6">
+    <a href="/sources" class="text-emerald-400 hover:text-emerald-400/80 text-sm">&larr; Back to Sources</a>
+</div>
+
+<div class="bg-forest-darker rounded-xl border border-emerald-500/10 p-6">
+    <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl text-emerald-400">&#x1F4E1;</span>
+        <h1 class="text-2xl font-bold text-white">{{.Data.Source.Name}}</h1>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <div>
+            <span class="text-gray-500">Type</span>
+            <div class="text-white">Source (data ingestion)</div>
+        </div>
+        <div>
+            <span class="text-gray-500">RAM Allocated</span>
+            <div class="text-white">{{formatBytes .Data.Source.RAMAllocated}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">Land</span>
+            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Source.LandID}}{{end}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">Started</span>
+            <div class="text-white">{{timeAgo .Data.Source.StartedAt}}</div>
+        </div>
+        {{if .Data.Source.SourceType}}
+        <div>
+            <span class="text-gray-500">Source Type</span>
+            <div class="text-white">{{.Data.Source.SourceType}}</div>
+        </div>
+        {{end}}
+        {{if .Data.Source.Publishes}}
+        <div>
+            <span class="text-gray-500">Publishes To</span>
+            <div class="text-emerald-400 font-mono">{{.Data.Source.Publishes}}</div>
+        </div>
+        {{end}}
+    </div>
+</div>
+{{end}}

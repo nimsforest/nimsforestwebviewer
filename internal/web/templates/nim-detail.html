@@ -1,0 +1,40 @@
+{{define "content"}}
+<div class="mb-6">
+    <a href="/nims" class="text-life-blue hover:text-life-blue/80 text-sm">&larr; Back to Nims</a>
+</div>
+
+<div class="bg-forest-darker rounded-xl border border-life-blue/10 p-6">
+    <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl text-life-blue">&#x1F9D9;</span>
+        <h1 class="text-2xl font-bold text-white">{{if .Data.Nim.AIEnabled}}&#x2728; {{end}}{{.Data.Nim.Name}}</h1>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <div>
+            <span class="text-gray-500">Type</span>
+            <div class="text-white">Nim (business logic handler)</div>
+        </div>
+        <div>
+            <span class="text-gray-500">RAM Allocated</span>
+            <div class="text-white">{{formatBytes .Data.Nim.RAMAllocated}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">Land</span>
+            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Nim.LandID}}{{end}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">Started</span>
+            <div class="text-white">{{timeAgo .Data.Nim.StartedAt}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">AI Enabled</span>
+            <div class="text-white">{{if .Data.Nim.AIEnabled}}Yes{{else}}No{{end}}</div>
+        </div>
+        {{if .Data.Nim.Model}}
+        <div>
+            <span class="text-gray-500">Model</span>
+            <div class="text-white">{{.Data.Nim.Model}}</div>
+        </div>
+        {{end}}
+    </div>
+</div>
+{{end}}
