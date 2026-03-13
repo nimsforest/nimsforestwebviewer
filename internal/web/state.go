@@ -14,7 +14,8 @@ type ForestState struct {
 	Treehouses []TreehouseVM     `json:"treehouses"`
 	Nims       []NimVM           `json:"nims"`
 	Songbirds  []SongbirdVM      `json:"songbirds"`
-	Sources    []SourceVM        `json:"sources"`
+	Sources        []SourceVM          `json:"sources"`
+	Infrastructure InfrastructureState `json:"infrastructure"`
 }
 
 type ForestSummary struct {
@@ -111,6 +112,27 @@ type SourceVM struct {
 	ProcessVM
 	SourceType string `json:"source_type"`
 	Publishes  string `json:"publishes"`
+}
+
+// InfrastructureState represents cluster-wide NATS infrastructure.
+type InfrastructureState struct {
+	Streams    []StreamStatusVM `json:"streams"`
+	KVStores   []KVStatusVM     `json:"kv_stores"`
+	WindActive bool             `json:"wind_active"`
+}
+
+type StreamStatusVM struct {
+	Name      string   `json:"name"`
+	Subjects  []string `json:"subjects"`
+	Messages  uint64   `json:"messages"`
+	Bytes     uint64   `json:"bytes"`
+	Consumers int      `json:"consumers"`
+}
+
+type KVStatusVM struct {
+	Bucket string `json:"bucket"`
+	Keys   uint64 `json:"keys"`
+	Bytes  uint64 `json:"bytes"`
 }
 
 // FindTree finds a tree by name across all data.

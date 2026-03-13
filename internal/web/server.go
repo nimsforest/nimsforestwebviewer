@@ -42,6 +42,7 @@ func NewServer(state *StateCache, version string) *Server {
 			"nims.html", "nim-detail.html",
 			"songbirds.html", "songbird-detail.html",
 			"sources.html", "source-detail.html",
+			"infrastructure.html",
 		},
 		nil,
 	)
@@ -60,6 +61,7 @@ func NewServer(state *StateCache, version string) *Server {
 	s.mux.HandleFunc("GET /songbirds/{name}", s.handleSongbirdDetail)
 	s.mux.HandleFunc("GET /sources", s.handleSources)
 	s.mux.HandleFunc("GET /sources/{name}", s.handleSourceDetail)
+	s.mux.HandleFunc("GET /infrastructure", s.handleInfrastructure)
 	s.mux.HandleFunc("GET /api/state", s.handleAPIState)
 
 	return s
@@ -199,6 +201,10 @@ type DetailData struct {
 	Songbird  *SongbirdVM
 	Source    *SourceVM
 	Land      *LandVM
+}
+
+func (s *Server) handleInfrastructure(w http.ResponseWriter, r *http.Request) {
+	s.renderer.Render(w, "infrastructure.html", "Infrastructure - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleAPIState(w http.ResponseWriter, r *http.Request) {

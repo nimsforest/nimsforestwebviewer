@@ -1,0 +1,106 @@
+{{define "content"}}
+<div class="mb-8">
+    <h1 class="text-2xl font-bold text-white mb-2">&#x2699;&#xFE0F; Infrastructure</h1>
+    <p class="text-gray-500 text-sm">Cluster-wide NATS messaging infrastructure</p>
+</div>
+
+{{if .Data.State}}
+<!-- Streams -->
+<h2 class="text-lg font-bold text-white mb-4">JetStream Streams</h2>
+{{if .Data.State.Infrastructure.Streams}}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    {{range .Data.State.Infrastructure.Streams}}
+    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+        <div class="flex items-center gap-3 mb-4">
+            <span class="text-2xl">&#x1F30A;</span>
+            <h3 class="font-semibold text-white text-lg">{{.Name}}</h3>
+        </div>
+        <div class="grid grid-cols-3 gap-4 text-sm mb-4">
+            <div>
+                <span class="text-gray-500">Messages</span>
+                <div class="text-white font-semibold">{{.Messages}}</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Size</span>
+                <div class="text-white font-semibold">{{formatBytes .Bytes}}</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Consumers</span>
+                <div class="text-white font-semibold">{{.Consumers}}</div>
+            </div>
+        </div>
+        {{if .Subjects}}
+        <div class="border-t border-forest-green/10 pt-3">
+            <span class="text-xs text-gray-500">Subjects</span>
+            <div class="flex flex-wrap gap-2 mt-1">
+                {{range .Subjects}}
+                <span class="text-xs font-mono text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded">{{.}}</span>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+    </div>
+    {{end}}
+</div>
+{{else}}
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-6 text-center mb-8">
+    <p class="text-gray-400">No JetStream streams detected.</p>
+</div>
+{{end}}
+
+<!-- KV Stores -->
+<h2 class="text-lg font-bold text-white mb-4">KV Stores</h2>
+{{if .Data.State.Infrastructure.KVStores}}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+    {{range .Data.State.Infrastructure.KVStores}}
+    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+        <div class="flex items-center gap-3 mb-4">
+            <span class="text-2xl">&#x1F4E6;</span>
+            <h3 class="font-semibold text-white text-lg">{{.Bucket}}</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+                <span class="text-gray-500">Keys</span>
+                <div class="text-white font-semibold">{{.Keys}}</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Size</span>
+                <div class="text-white font-semibold">{{formatBytes .Bytes}}</div>
+            </div>
+        </div>
+    </div>
+    {{end}}
+</div>
+{{else}}
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-6 text-center mb-8">
+    <p class="text-gray-400">No KV stores detected.</p>
+</div>
+{{end}}
+
+<!-- Wind -->
+<h2 class="text-lg font-bold text-white mb-4">Wind (Core Pub/Sub)</h2>
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 mb-8">
+    <div class="flex items-center gap-3">
+        <span class="text-2xl">&#x1F4A8;</span>
+        <h3 class="font-semibold text-white">Wind Transport</h3>
+        {{if .Data.State.Infrastructure.WindActive}}
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-forest-green/10 text-forest-green">
+            <span class="w-1.5 h-1.5 rounded-full bg-forest-green animate-pulse"></span>
+            Active
+        </span>
+        {{else}}
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+            Inactive
+        </span>
+        {{end}}
+    </div>
+    <p class="text-gray-500 text-sm mt-2">Ephemeral NATS core pub/sub for carrying leaves between processes.</p>
+</div>
+
+{{else}}
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-8 text-center">
+    <p class="text-gray-400">No infrastructure data available.</p>
+</div>
+{{end}}
+{{end}}
