@@ -42,7 +42,7 @@ func NewServer(state *StateCache, version string) *Server {
 			"nims.html", "nim-detail.html",
 			"songbirds.html", "songbird-detail.html",
 			"sources.html", "source-detail.html",
-			"infrastructure.html",
+			"infrastructure.html", "infrastructure-detail.html",
 		},
 		nil,
 	)
@@ -62,6 +62,7 @@ func NewServer(state *StateCache, version string) *Server {
 	s.mux.HandleFunc("GET /sources", s.handleSources)
 	s.mux.HandleFunc("GET /sources/{name}", s.handleSourceDetail)
 	s.mux.HandleFunc("GET /infrastructure", s.handleInfrastructure)
+	s.mux.HandleFunc("GET /infrastructure/{name}", s.handleInfrastructureDetail)
 	s.mux.HandleFunc("GET /api/state", s.handleAPIState)
 
 	return s
@@ -203,8 +204,127 @@ type DetailData struct {
 	Land      *LandVM
 }
 
+// InfraDetailData is passed to infrastructure detail templates.
+type InfraDetailData struct {
+	Dashboard *DashboardData
+	Infra     *InfraDetailVM
+}
+
+// InfraDetailVM holds display data for a single infrastructure component.
+type InfraDetailVM struct {
+	Name         string
+	Icon         string
+	TypeLabel    string
+	BadgeClass   string
+	Description  string
+	Active       bool
+	HasMetrics   bool
+	ShowMessages bool
+	ShowBytes    bool
+	ShowConsumers bool
+	ShowKeys     bool
+	Messages     uint64
+	Bytes        uint64
+	Consumers    int
+	Keys         uint64
+	Subjects     []string
+}
+
 func (s *Server) handleInfrastructure(w http.ResponseWriter, r *http.Request) {
 	s.renderer.Render(w, "infrastructure.html", "Infrastructure - NimsForest", s.dashboardData())
+}
+
+func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Request) {
+	name := r.PathValue("name")
+	data := s.dashboardData()
+
+	var vm *InfraDetailVM
+
+	switch name {
+	case "river":
+		vm = &InfraDetailVM{
+			Name:        "River",
+			Icon:        "\U0001F30A",
+			TypeLabel:   "JetStream WorkQueue",
+			BadgeClass:  "bg-cyan-400/10 text-cyan-400",
+			Description: "JetStream stream for external unstructured data. WorkQueue retention policy ensures each message is processed exactly once. 24-hour max age, subject pattern river.>",
+			Active:      true,
+			HasMetrics:  true,
+		}
+		if data.State != nil {
+			for _, st := range data.State.Infrastructure.Streams {
+				if st.Name == "RIVER" {
+					vm.ShowMessages = true
+					vm.ShowBytes = true
+					vm.ShowConsumers = true
+					vm.Messages = st.Messages
+					vm.Bytes = st.Bytes
+					vm.Consumers = st.Consumers
+					vm.Subjects = st.Subjects
+					break
+				}
+			}
+		}
+	case "wind":
+		vm = &InfraDetailVM{
+			Name:        "Wind",
+			Icon:        "\U0001F4A8",
+			TypeLabel:   "Core Pub/Sub",
+			BadgeClass:  "bg-sky-400/10 text-sky-400",
+			Description: "NATS core pub/sub transport for carrying leaves between processes. Ephemeral — messages are not persisted, only delivered to active subscribers. Used by Drop() and Catch() in the nim package.",
+			Active:      data.State != nil && data.State.Infrastructure.WindActive,
+		}
+	case "soil":
+		vm = &InfraDetailVM{
+			Name:        "Soil",
+			Icon:        "\U0001F4E6",
+			TypeLabel:   "KV Bucket",
+			BadgeClass:  "bg-amber-400/10 text-amber-400",
+			Description: "JetStream KV bucket for shared cluster state. Stores configuration, process definitions, and runtime state as key-value pairs accessible from any node.",
+			Active:      true,
+			HasMetrics:  true,
+		}
+		if data.State != nil {
+			for _, kv := range data.State.Infrastructure.KVStores {
+				if kv.Bucket == "SOIL" {
+					vm.ShowKeys = true
+					vm.ShowBytes = true
+					vm.Keys = kv.Keys
+					vm.Bytes = kv.Bytes
+					break
+				}
+			}
+		}
+	case "humus":
+		vm = &InfraDetailVM{
+			Name:        "Humus",
+			Icon:        "\U0001F4DC",
+			TypeLabel:   "JetStream Limits",
+			BadgeClass:  "bg-emerald-400/10 text-emerald-400",
+			Description: "JetStream stream for audit logging. Limits retention policy with 7-day max age. Records system events, process lifecycle changes, and operational actions on subject pattern humus.>",
+			Active:      true,
+			HasMetrics:  true,
+		}
+		if data.State != nil {
+			for _, st := range data.State.Infrastructure.Streams {
+				if st.Name == "HUMUS" {
+					vm.ShowMessages = true
+					vm.ShowBytes = true
+					vm.ShowConsumers = true
+					vm.Messages = st.Messages
+					vm.Bytes = st.Bytes
+					vm.Consumers = st.Consumers
+					vm.Subjects = st.Subjects
+					break
+				}
+			}
+		}
+	default:
+		http.NotFound(w, r)
+		return
+	}
+
+	s.renderer.Render(w, "infrastructure-detail.html", vm.Name+" - Infrastructure - NimsForest", &InfraDetailData{Dashboard: data, Infra: vm})
 }
 
 func (s *Server) handleAPIState(w http.ResponseWriter, r *http.Request) {
