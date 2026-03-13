@@ -3,38 +3,40 @@
     <a href="/nims" class="text-life-blue hover:text-life-blue/80 text-sm">&larr; Back to Nims</a>
 </div>
 
-<div class="bg-forest-darker rounded-xl border border-life-blue/10 p-6">
-    <div class="flex items-center gap-3 mb-6">
-        <span class="text-2xl text-life-blue">&#x1F9D9;</span>
-        <h1 class="text-2xl font-bold text-white">{{if .Data.Nim.AIEnabled}}&#x2728; {{end}}{{.Data.Nim.Name}}</h1>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        <div>
-            <span class="text-gray-500">Type</span>
-            <div class="text-white">Nim (business logic handler)</div>
+<div class="flex justify-center">
+    <div class="w-72 bg-forest-darker rounded-2xl border border-life-blue/20 overflow-hidden">
+        <div class="bg-gradient-to-b from-life-blue/20 to-transparent pt-8 pb-4 text-center">
+            <span class="text-6xl">&#x1F9D9;</span>
+            {{if .Data.Nim.AIEnabled}}
+            <div class="mt-2">
+                <span class="px-2 py-0.5 rounded-full text-xs bg-purple-500/20 text-purple-400">&#x2728; AI</span>
+            </div>
+            {{end}}
         </div>
-        <div>
-            <span class="text-gray-500">RAM Allocated</span>
-            <div class="text-white">{{formatBytes .Data.Nim.RAMAllocated}}</div>
+        <div class="px-6 pb-6">
+            <h1 class="text-xl font-bold text-white text-center mb-1">{{.Data.Nim.Name}}</h1>
+            <div class="text-xs text-life-blue text-center mb-4">Nim</div>
+            <div class="border-t border-life-blue/10 pt-4 space-y-3 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-gray-500">RAM</span>
+                    <span class="text-white font-medium">{{formatBytes .Data.Nim.RAMAllocated}}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Land</span>
+                    <span class="text-white font-medium">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Nim.LandID}}{{end}}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Started</span>
+                    <span class="text-white font-medium">{{timeAgo .Data.Nim.StartedAt}}</span>
+                </div>
+                {{if .Data.Nim.Model}}
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Model</span>
+                    <span class="text-purple-400 font-medium">{{.Data.Nim.Model}}</span>
+                </div>
+                {{end}}
+            </div>
         </div>
-        <div>
-            <span class="text-gray-500">Land</span>
-            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Nim.LandID}}{{end}}</div>
-        </div>
-        <div>
-            <span class="text-gray-500">Started</span>
-            <div class="text-white">{{timeAgo .Data.Nim.StartedAt}}</div>
-        </div>
-        <div>
-            <span class="text-gray-500">AI Enabled</span>
-            <div class="text-white">{{if .Data.Nim.AIEnabled}}Yes{{else}}No{{end}}</div>
-        </div>
-        {{if .Data.Nim.Model}}
-        <div>
-            <span class="text-gray-500">Model</span>
-            <div class="text-white">{{.Data.Nim.Model}}</div>
-        </div>
-        {{end}}
     </div>
 </div>
 {{end}}

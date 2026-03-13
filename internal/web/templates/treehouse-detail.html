@@ -3,34 +3,35 @@
     <a href="/treehouses" class="text-solar-gold hover:text-solar-gold/80 text-sm">&larr; Back to Treehouses</a>
 </div>
 
-<div class="bg-forest-darker rounded-xl border border-solar-gold/10 p-6">
-    <div class="flex items-center gap-3 mb-6">
-        <span class="text-2xl text-solar-gold">&#x1F3E0;</span>
-        <h1 class="text-2xl font-bold text-white">{{.Data.Treehouse.Name}}</h1>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        <div>
-            <span class="text-gray-500">Type</span>
-            <div class="text-white">Treehouse (Lua script processor)</div>
+<div class="flex justify-center">
+    <div class="w-72 bg-forest-darker rounded-2xl border border-solar-gold/20 overflow-hidden">
+        <div class="bg-gradient-to-b from-solar-gold/20 to-transparent pt-8 pb-4 text-center">
+            <span class="text-6xl">&#x1F3E0;</span>
         </div>
-        <div>
-            <span class="text-gray-500">RAM Allocated</span>
-            <div class="text-white">{{formatBytes .Data.Treehouse.RAMAllocated}}</div>
+        <div class="px-6 pb-6">
+            <h1 class="text-xl font-bold text-white text-center mb-1">{{.Data.Treehouse.Name}}</h1>
+            <div class="text-xs text-solar-gold text-center mb-4">Treehouse</div>
+            <div class="border-t border-solar-gold/10 pt-4 space-y-3 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-gray-500">RAM</span>
+                    <span class="text-white font-medium">{{formatBytes .Data.Treehouse.RAMAllocated}}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Land</span>
+                    <span class="text-white font-medium">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Treehouse.LandID}}{{end}}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Started</span>
+                    <span class="text-white font-medium">{{timeAgo .Data.Treehouse.StartedAt}}</span>
+                </div>
+                {{if .Data.Treehouse.ScriptPath}}
+                <div class="border-t border-solar-gold/10 pt-3">
+                    <span class="text-gray-500 text-xs">Script</span>
+                    <div class="text-white font-mono text-xs mt-0.5 break-all">{{.Data.Treehouse.ScriptPath}}</div>
+                </div>
+                {{end}}
+            </div>
         </div>
-        <div>
-            <span class="text-gray-500">Land</span>
-            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Treehouse.LandID}}{{end}}</div>
-        </div>
-        <div>
-            <span class="text-gray-500">Started</span>
-            <div class="text-white">{{timeAgo .Data.Treehouse.StartedAt}}</div>
-        </div>
-        {{if .Data.Treehouse.ScriptPath}}
-        <div class="col-span-2">
-            <span class="text-gray-500">Script Path</span>
-            <div class="text-white font-mono text-xs">{{.Data.Treehouse.ScriptPath}}</div>
-        </div>
-        {{end}}
     </div>
 </div>
 {{end}}
