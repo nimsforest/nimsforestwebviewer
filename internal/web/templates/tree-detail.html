@@ -3,26 +3,24 @@
     <a href="/trees" class="text-forest-green hover:text-forest-green/80 text-sm">&larr; Back to Trees</a>
 </div>
 
-<div class="flex justify-center">
-    <div class="w-72 bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-center mb-4">
-            <span class="text-5xl">&#x1F333;</span>
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+    <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">&#x1F333;</span>
+        <h1 class="text-xl font-bold text-white">{{.Data.Process.Name}}</h1>
+        <span class="text-xs text-forest-green">Tree</span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+        <div>
+            <span class="text-gray-500">RAM Allocated</span>
+            <div class="text-white">{{formatBytes .Data.Process.RAMAllocated}}</div>
         </div>
-        <h1 class="text-lg font-bold text-white text-center mb-1">{{.Data.Process.Name}}</h1>
-        <div class="text-xs text-forest-green text-center mb-4">Tree</div>
-        <div class="border-t border-forest-green/10 pt-4 space-y-3 text-sm">
-            <div class="flex justify-between">
-                <span class="text-gray-500">RAM</span>
-                <span class="text-white">{{formatBytes .Data.Process.RAMAllocated}}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-500">Land</span>
-                <span class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Process.LandID}}{{end}}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-500">Started</span>
-                <span class="text-white">{{timeAgo .Data.Process.StartedAt}}</span>
-            </div>
+        <div>
+            <span class="text-gray-500">Land</span>
+            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Process.LandID}}{{end}}</div>
+        </div>
+        <div>
+            <span class="text-gray-500">Started</span>
+            <div class="text-white">{{timeAgo .Data.Process.StartedAt}}</div>
         </div>
     </div>
 </div>

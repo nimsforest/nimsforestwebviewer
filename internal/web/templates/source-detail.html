@@ -3,39 +3,37 @@
     <a href="/sources" class="text-emerald-400 hover:text-emerald-400/80 text-sm">&larr; Back to Sources</a>
 </div>
 
-<div class="flex justify-center">
-    <div class="w-72 bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-center mb-4">
-            <span class="text-5xl">&#x1F4E1;</span>
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+    <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">&#x1F4E1;</span>
+        <h1 class="text-xl font-bold text-white">{{.Data.Source.Name}}</h1>
+        <span class="text-xs text-emerald-400">Source</span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+        <div>
+            <span class="text-gray-500">RAM Allocated</span>
+            <div class="text-white">{{formatBytes .Data.Source.RAMAllocated}}</div>
         </div>
-        <h1 class="text-lg font-bold text-white text-center mb-1">{{.Data.Source.Name}}</h1>
-        <div class="text-xs text-emerald-400 text-center mb-4">Source</div>
-        <div class="border-t border-forest-green/10 pt-4 space-y-3 text-sm">
-            <div class="flex justify-between">
-                <span class="text-gray-500">RAM</span>
-                <span class="text-white">{{formatBytes .Data.Source.RAMAllocated}}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-500">Land</span>
-                <span class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Source.LandID}}{{end}}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-500">Started</span>
-                <span class="text-white">{{timeAgo .Data.Source.StartedAt}}</span>
-            </div>
-            {{if .Data.Source.SourceType}}
-            <div class="flex justify-between">
-                <span class="text-gray-500">Type</span>
-                <span class="text-emerald-400">{{.Data.Source.SourceType}}</span>
-            </div>
-            {{end}}
-            {{if .Data.Source.Publishes}}
-            <div class="border-t border-forest-green/10 pt-3">
-                <span class="text-gray-500 text-xs">Publishes</span>
-                <div class="text-emerald-400 font-mono text-xs mt-0.5">{{.Data.Source.Publishes}}</div>
-            </div>
-            {{end}}
+        <div>
+            <span class="text-gray-500">Land</span>
+            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Source.LandID}}{{end}}</div>
         </div>
+        <div>
+            <span class="text-gray-500">Started</span>
+            <div class="text-white">{{timeAgo .Data.Source.StartedAt}}</div>
+        </div>
+        {{if .Data.Source.SourceType}}
+        <div>
+            <span class="text-gray-500">Source Type</span>
+            <div class="text-emerald-400">{{.Data.Source.SourceType}}</div>
+        </div>
+        {{end}}
+        {{if .Data.Source.Publishes}}
+        <div class="col-span-2 sm:col-span-3">
+            <span class="text-gray-500">Publishes</span>
+            <div class="text-emerald-400 font-mono text-xs">{{.Data.Source.Publishes}}</div>
+        </div>
+        {{end}}
     </div>
 </div>
 {{end}}

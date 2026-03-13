@@ -6,28 +6,35 @@
 
 {{if .Data.State}}
 {{if .Data.State.Nims}}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="flex flex-wrap gap-4 justify-center">
     {{range .Data.State.Nims}}
-    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-life-blue/10 p-5 hover:border-life-blue/30 transition-colors block">
-        <div class="flex items-center gap-2 mb-3">
-            <span class="text-life-blue">&#x1F9D9;</span>
-            <h3 class="font-semibold text-white">{{if .AIEnabled}}&#x2728; {{end}}{{.Name}}</h3>
+    <a href="/nims/{{.Name}}" class="w-56 bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-life-blue/30 transition-colors block text-center">
+        <div class="mb-3">
+            <span class="text-5xl">&#x1F9D9;</span>
+            {{if .AIEnabled}}
+            <div class="mt-1">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400">&#x2728; AI</span>
+            </div>
+            {{end}}
         </div>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-            <div>
+        <h3 class="font-semibold text-white mb-1">{{.Name}}</h3>
+        <div class="text-xs text-life-blue mb-3">Nim</div>
+        <div class="border-t border-forest-green/10 pt-3 space-y-2 text-sm text-left">
+            <div class="flex justify-between">
                 <span class="text-gray-500">RAM</span>
-                <div class="text-white">{{formatBytes .RAMAllocated}}</div>
+                <span class="text-white">{{formatBytes .RAMAllocated}}</span>
             </div>
-            <div>
+            <div class="flex justify-between">
                 <span class="text-gray-500">Started</span>
-                <div class="text-white">{{timeAgo .StartedAt}}</div>
+                <span class="text-white">{{timeAgo .StartedAt}}</span>
             </div>
+            {{if .Model}}
+            <div class="flex justify-between">
+                <span class="text-gray-500">Model</span>
+                <span class="text-purple-400">{{.Model}}</span>
+            </div>
+            {{end}}
         </div>
-        {{if .AIEnabled}}
-        <div class="mt-2">
-            <span class="px-2 py-0.5 rounded-full text-xs bg-purple-500/10 text-purple-400">AI{{if .Model}}: {{.Model}}{{end}}</span>
-        </div>
-        {{end}}
     </a>
     {{end}}
 </div>

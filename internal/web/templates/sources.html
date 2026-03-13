@@ -6,30 +6,32 @@
 
 {{if .Data.State}}
 {{if .Data.State.Sources}}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="flex flex-wrap gap-4 justify-center">
     {{range .Data.State.Sources}}
-    <a href="/sources/{{.Name}}" class="bg-forest-darker rounded-xl border border-emerald-500/10 p-5 hover:border-emerald-500/30 transition-colors block">
-        <div class="flex items-center gap-2 mb-3">
-            <span class="text-emerald-400">&#x1F4E1;</span>
-            <h3 class="font-semibold text-white">{{.Name}}</h3>
+    <a href="/sources/{{.Name}}" class="w-56 bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-emerald-500/30 transition-colors block text-center">
+        <div class="mb-3">
+            <span class="text-5xl">&#x1F4E1;</span>
         </div>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-            <div>
+        <h3 class="font-semibold text-white mb-1">{{.Name}}</h3>
+        <div class="text-xs text-emerald-400 mb-3">Source</div>
+        <div class="border-t border-forest-green/10 pt-3 space-y-2 text-sm text-left">
+            <div class="flex justify-between">
                 <span class="text-gray-500">RAM</span>
-                <div class="text-white">{{formatBytes .RAMAllocated}}</div>
+                <span class="text-white">{{formatBytes .RAMAllocated}}</span>
             </div>
-            <div>
+            <div class="flex justify-between">
                 <span class="text-gray-500">Started</span>
-                <div class="text-white">{{timeAgo .StartedAt}}</div>
+                <span class="text-white">{{timeAgo .StartedAt}}</span>
             </div>
+            {{if .SourceType}}
+            <div class="flex justify-between">
+                <span class="text-gray-500">Type</span>
+                <span class="text-emerald-400">{{.SourceType}}</span>
+            </div>
+            {{end}}
         </div>
-        {{if .SourceType}}
-        <div class="mt-2">
-            <span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400">{{.SourceType}}</span>
-        </div>
-        {{end}}
         {{if .Publishes}}
-        <div class="mt-1 text-xs text-emerald-400 font-mono truncate">{{.Publishes}}</div>
+        <div class="mt-2 text-xs text-emerald-400 font-mono truncate text-left">{{.Publishes}}</div>
         {{end}}
     </a>
     {{end}}

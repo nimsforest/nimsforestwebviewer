@@ -6,25 +6,26 @@
 
 {{if .Data.State}}
 {{if .Data.State.Treehouses}}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="flex flex-wrap gap-4 justify-center">
     {{range .Data.State.Treehouses}}
-    <a href="/treehouses/{{.Name}}" class="bg-forest-darker rounded-xl border border-solar-gold/10 p-5 hover:border-solar-gold/30 transition-colors block">
-        <div class="flex items-center gap-2 mb-3">
-            <span class="text-solar-gold">&#x1F3E0;</span>
-            <h3 class="font-semibold text-white">{{.Name}}</h3>
+    <a href="/treehouses/{{.Name}}" class="w-56 bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-solar-gold/30 transition-colors block text-center">
+        <div class="mb-3">
+            <span class="text-5xl">&#x1F3E0;</span>
         </div>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-            <div>
+        <h3 class="font-semibold text-white mb-1">{{.Name}}</h3>
+        <div class="text-xs text-solar-gold mb-3">Treehouse</div>
+        <div class="border-t border-forest-green/10 pt-3 space-y-2 text-sm text-left">
+            <div class="flex justify-between">
                 <span class="text-gray-500">RAM</span>
-                <div class="text-white">{{formatBytes .RAMAllocated}}</div>
+                <span class="text-white">{{formatBytes .RAMAllocated}}</span>
             </div>
-            <div>
+            <div class="flex justify-between">
                 <span class="text-gray-500">Started</span>
-                <div class="text-white">{{timeAgo .StartedAt}}</div>
+                <span class="text-white">{{timeAgo .StartedAt}}</span>
             </div>
         </div>
         {{if .ScriptPath}}
-        <div class="mt-2 text-xs text-gray-500 truncate">{{.ScriptPath}}</div>
+        <div class="mt-2 text-xs text-gray-500 truncate text-left">{{.ScriptPath}}</div>
         {{end}}
     </a>
     {{end}}
