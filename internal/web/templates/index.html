@@ -35,79 +35,75 @@
     </div>
 </div>
 
-<!-- Process Counts -->
-<div class="space-y-4 mb-8">
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <a href="/trees" class="flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity">
-            <span class="text-forest-green">&#x1F333;</span>
-            <span class="text-xs text-gray-500 uppercase tracking-wider">Trees</span>
-            <span class="text-lg font-bold text-white ml-auto">{{.Data.State.Summary.TreeCount}}</span>
-        </a>
-        {{if .Data.State.Trees}}
-        <div class="flex flex-wrap gap-1.5">
-            {{range .Data.State.Trees}}
-            <a href="/trees/{{.Name}}" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-forest-green/10 text-forest-green hover:bg-forest-green/20 transition-colors">{{.Name}}</a>
-            {{end}}
-        </div>
-        {{end}}
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <a href="/treehouses" class="flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity">
-            <span class="text-solar-gold">&#x1F3E0;</span>
-            <span class="text-xs text-gray-500 uppercase tracking-wider">Treehouses</span>
-            <span class="text-lg font-bold text-white ml-auto">{{.Data.State.Summary.TreehouseCount}}</span>
-        </a>
-        {{if .Data.State.Treehouses}}
-        <div class="flex flex-wrap gap-1.5">
-            {{range .Data.State.Treehouses}}
-            <a href="/treehouses/{{.Name}}" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-solar-gold/10 text-solar-gold hover:bg-solar-gold/20 transition-colors">{{.Name}}</a>
-            {{end}}
-        </div>
-        {{end}}
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <a href="/nims" class="flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity">
-            <span class="text-life-blue">&#x1F9D9;</span>
-            <span class="text-xs text-gray-500 uppercase tracking-wider">Nims</span>
-            <span class="text-lg font-bold text-white ml-auto">{{.Data.State.Summary.NimCount}}</span>
-        </a>
-        {{if .Data.State.Nims}}
-        <div class="flex flex-wrap gap-1.5">
-            {{range .Data.State.Nims}}
-            <a href="/nims/{{.Name}}" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-life-blue/10 text-life-blue hover:bg-life-blue/20 transition-colors">{{if .AIEnabled}}&#x2728; {{end}}{{.Name}}</a>
-            {{end}}
-        </div>
-        {{end}}
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-purple-500/10 p-5">
-        <a href="/songbirds" class="flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity">
-            <span class="text-purple-400">&#x1F426;</span>
-            <span class="text-xs text-gray-500 uppercase tracking-wider">Songbirds</span>
-            <span class="text-lg font-bold text-white ml-auto">{{.Data.State.Summary.SongbirdCount}}</span>
-        </a>
-        {{if .Data.State.Songbirds}}
-        <div class="flex flex-wrap gap-1.5">
-            {{range .Data.State.Songbirds}}
-            <a href="/songbirds/{{.Name}}" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition-colors">{{.Name}}</a>
-            {{end}}
-        </div>
-        {{end}}
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-emerald-500/10 p-5">
-        <a href="/sources" class="flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity">
-            <span class="text-emerald-400">&#x1F4E1;</span>
-            <span class="text-xs text-gray-500 uppercase tracking-wider">Sources</span>
-            <span class="text-lg font-bold text-white ml-auto">{{.Data.State.Summary.SourceCount}}</span>
-        </a>
-        {{if .Data.State.Sources}}
-        <div class="flex flex-wrap gap-1.5">
-            {{range .Data.State.Sources}}
-            <a href="/sources/{{.Name}}" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors">{{.Name}}</a>
-            {{end}}
-        </div>
-        {{end}}
-    </div>
+<!-- Processes -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
+    <a href="/trees" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-forest-green/30 transition-colors text-center">
+        <span class="text-4xl">&#x1F333;</span>
+        <div class="text-2xl font-bold text-white mt-2">{{.Data.State.Summary.TreeCount}}</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Trees</div>
+    </a>
+    <a href="/treehouses" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-solar-gold/30 transition-colors text-center">
+        <span class="text-4xl">&#x1F3E0;</span>
+        <div class="text-2xl font-bold text-white mt-2">{{.Data.State.Summary.TreehouseCount}}</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Treehouses</div>
+    </a>
+    <a href="/nims" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-life-blue/30 transition-colors text-center">
+        <span class="text-4xl">&#x1F9D9;</span>
+        <div class="text-2xl font-bold text-white mt-2">{{.Data.State.Summary.NimCount}}</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Nims</div>
+    </a>
+    <a href="/songbirds" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-purple-500/30 transition-colors text-center">
+        <span class="text-4xl">&#x1F426;</span>
+        <div class="text-2xl font-bold text-white mt-2">{{.Data.State.Summary.SongbirdCount}}</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Songbirds</div>
+    </a>
+    <a href="/sources" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-emerald-500/30 transition-colors text-center">
+        <span class="text-4xl">&#x1F4E1;</span>
+        <div class="text-2xl font-bold text-white mt-2">{{.Data.State.Summary.SourceCount}}</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Sources</div>
+    </a>
 </div>
+
+<!-- Process Names -->
+{{if or .Data.State.Trees .Data.State.Treehouses .Data.State.Nims .Data.State.Songbirds .Data.State.Sources}}
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
+    {{range .Data.State.Trees}}
+    <a href="/trees/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-forest-green/30 transition-colors text-center">
+        <span class="text-2xl">&#x1F333;</span>
+        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
+        <div class="text-xs text-forest-green mt-0.5">Tree</div>
+    </a>
+    {{end}}
+    {{range .Data.State.Treehouses}}
+    <a href="/treehouses/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-solar-gold/30 transition-colors text-center">
+        <span class="text-2xl">&#x1F3E0;</span>
+        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
+        <div class="text-xs text-solar-gold mt-0.5">Treehouse</div>
+    </a>
+    {{end}}
+    {{range .Data.State.Nims}}
+    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-life-blue/30 transition-colors text-center">
+        <span class="text-2xl">{{if .AIEnabled}}&#x2728;{{end}}&#x1F9D9;</span>
+        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
+        <div class="text-xs text-life-blue mt-0.5">Nim</div>
+    </a>
+    {{end}}
+    {{range .Data.State.Songbirds}}
+    <a href="/songbirds/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-purple-500/30 transition-colors text-center">
+        <span class="text-2xl">&#x1F426;</span>
+        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
+        <div class="text-xs text-purple-400 mt-0.5">Songbird</div>
+    </a>
+    {{end}}
+    {{range .Data.State.Sources}}
+    <a href="/sources/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-emerald-500/30 transition-colors text-center">
+        <span class="text-2xl">&#x1F4E1;</span>
+        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
+        <div class="text-xs text-emerald-400 mt-0.5">Source</div>
+    </a>
+    {{end}}
+</div>
+{{end}}
 {{end}}
 
 <!-- Land Heartbeats -->
