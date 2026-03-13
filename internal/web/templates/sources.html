@@ -6,9 +6,9 @@
 
 {{if .Data.State}}
 {{if .Data.State.Sources}}
-<div class="flex flex-wrap gap-4 justify-center">
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
     {{range .Data.State.Sources}}
-    <a href="/sources/{{.Name}}" class="w-56 bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-emerald-500/30 transition-colors block text-center">
+    <a href="/sources/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-emerald-500/30 transition-colors block text-center">
         <div class="mb-3">
             <span class="text-5xl">&#x1F4E1;</span>
         </div>
