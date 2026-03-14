@@ -119,6 +119,7 @@ type SourceVM struct {
 
 type AgentVM struct {
 	ProcessVM
+	AgentType  string `json:"agent_type"`
 	Subscribes string `json:"subscribes"`
 }
 

@@ -41,6 +41,7 @@ func NewServer(state *StateCache, version string) *Server {
 			"treehouses.html", "treehouse-detail.html",
 			"nims.html", "nim-detail.html",
 			"songbirds.html", "songbird-detail.html",
+			"agents.html",
 			"sources.html", "source-detail.html",
 			"infrastructure.html", "infrastructure-detail.html",
 		},
@@ -59,6 +60,7 @@ func NewServer(state *StateCache, version string) *Server {
 	s.mux.HandleFunc("GET /nims/{name}", s.handleNimDetail)
 	s.mux.HandleFunc("GET /songbirds", s.handleSongbirds)
 	s.mux.HandleFunc("GET /songbirds/{name}", s.handleSongbirdDetail)
+	s.mux.HandleFunc("GET /agents", s.handleAgents)
 	s.mux.HandleFunc("GET /sources", s.handleSources)
 	s.mux.HandleFunc("GET /sources/{name}", s.handleSourceDetail)
 	s.mux.HandleFunc("GET /infrastructure", s.handleInfrastructure)
@@ -166,6 +168,10 @@ func (s *Server) handleNimDetail(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) handleSongbirds(w http.ResponseWriter, r *http.Request) {
 	s.render(w, r, "songbirds.html", "Songbirds - NimsForest", s.dashboardData())
+}
+
+func (s *Server) handleAgents(w http.ResponseWriter, r *http.Request) {
+	s.render(w, r, "agents.html", "Agents - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleSongbirdDetail(w http.ResponseWriter, r *http.Request) {
