@@ -3,8 +3,8 @@
 <div id="dashboard-content" hx-get="/lands" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="flex items-center justify-between mb-8">
     <div>
-        <h1 class="text-2xl font-bold text-white mb-2">Lands</h1>
-        <p class="text-gray-500 text-sm">All land nodes in the forest</p>
+        <h1 class="text-2xl font-bold text-canopy mb-2">Lands</h1>
+        <p class="text-soil/60 text-sm">All land nodes in the forest</p>
     </div>
     {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
 </div>
@@ -12,15 +12,15 @@
 {{if .Data.State}}
 <!-- Forest Viewmodel Section -->
 <div class="flex items-center gap-3 mb-4">
-    <h2 class="text-lg font-semibold text-forest-green/60">Forest Viewmodel</h2>
-    <code class="text-xs text-forest-green/60 bg-forest-green/5 px-2 py-0.5 rounded">forest.viewmodel.state</code>
+    <h2 class="text-lg font-semibold text-forest-green/80">Forest Viewmodel</h2>
+    <code class="text-xs text-forest-green font-mono bg-forest-green/10 px-2 py-0.5 rounded">forest.viewmodel.state</code>
 </div>
-<p class="text-gray-500 text-xs mb-4 -mt-2">Logical state as seen by the forest orchestrator</p>
+<p class="text-soil/60 text-xs mb-4 -mt-2">Logical state as seen by the forest orchestrator</p>
 
 {{if .Data.State.Lands}}
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
     {{range .Data.State.Lands}}
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-forest-green/30 transition-colors" data-filterable data-name="{{.Hostname}}">
+    <div class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors" data-filterable data-name="{{.Hostname}}">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
                 {{if .HasMana}}
@@ -28,28 +28,28 @@
                 {{else}}
                     <span class="text-forest-green text-lg">&#x1F333;</span>
                 {{end}}
-                <h3 class="font-semibold text-white">{{.Hostname}}</h3>
+                <h3 class="font-semibold text-canopy">{{.Hostname}}</h3>
             </div>
-            <span class="text-xs text-gray-500">{{.ID}}</span>
+            <span class="text-xs text-soil/60">{{.ID}}</span>
         </div>
         <div class="grid grid-cols-2 gap-3 text-sm">
             <div>
-                <span class="text-gray-500">CPU</span>
-                <div class="text-white">{{.CPUCores}} cores</div>
+                <span class="text-soil/70">CPU</span>
+                <div class="text-canopy">{{.CPUCores}} cores</div>
             </div>
             <div>
-                <span class="text-gray-500">RAM</span>
-                <div class="text-white">{{formatBytes .RAMTotal}}</div>
+                <span class="text-soil/70">RAM</span>
+                <div class="text-canopy">{{formatBytes .RAMTotal}}</div>
             </div>
             {{if .HasMana}}
             <div>
-                <span class="text-gray-500">Mana (VRAM)</span>
+                <span class="text-soil/70">Mana (VRAM)</span>
                 <div class="text-solar-gold">{{formatBytes .GPUVram}}</div>
             </div>
             {{end}}
             <div>
-                <span class="text-gray-500">Processes</span>
-                <div class="text-white">{{.ProcessCount}}</div>
+                <span class="text-soil/70">Processes</span>
+                <div class="text-canopy">{{.ProcessCount}}</div>
             </div>
         </div>
         <div class="mt-4">
@@ -57,17 +57,17 @@
         </div>
         {{if .Sources}}
         <div class="mt-3">
-            <span class="text-xs text-gray-500">Sources:</span>
+            <span class="text-xs text-soil/60">Sources:</span>
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Sources}}
-                <span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400">{{.Name}}</span>
+                <span class="px-2 py-0.5 rounded-full text-xs bg-forest-green/10 text-forest-green">{{.Name}}</span>
                 {{end}}
             </div>
         </div>
         {{end}}
         {{if .Trees}}
         <div class="mt-2">
-            <span class="text-xs text-gray-500">Trees:</span>
+            <span class="text-xs text-soil/60">Trees:</span>
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Trees}}
                 <span class="px-2 py-0.5 rounded-full text-xs bg-forest-green/10 text-forest-green">{{.Name}}</span>
@@ -77,7 +77,7 @@
         {{end}}
         {{if .Treehouses}}
         <div class="mt-2">
-            <span class="text-xs text-gray-500">Treehouses:</span>
+            <span class="text-xs text-soil/60">Treehouses:</span>
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Treehouses}}
                 <span class="px-2 py-0.5 rounded-full text-xs bg-solar-gold/10 text-solar-gold">{{.Name}}</span>
@@ -87,45 +87,45 @@
         {{end}}
         {{if .Nims}}
         <div class="mt-2">
-            <span class="text-xs text-gray-500">Nims:</span>
+            <span class="text-xs text-soil/60">Nims:</span>
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Nims}}
-                <span class="px-2 py-0.5 rounded-full text-xs bg-life-blue/10 text-life-blue">{{.Name}}</span>
+                <span class="px-2 py-0.5 rounded-full text-xs bg-forest-green/10 text-forest-green">{{.Name}}</span>
                 {{end}}
             </div>
         </div>
         {{end}}
         {{if .Songbirds}}
         <div class="mt-2">
-            <span class="text-xs text-gray-500">Songbirds:</span>
+            <span class="text-xs text-soil/60">Songbirds:</span>
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Songbirds}}
-                <span class="px-2 py-0.5 rounded-full text-xs bg-purple-500/10 text-purple-400">{{.Name}}</span>
+                <span class="px-2 py-0.5 rounded-full text-xs bg-forest-green/10 text-forest-green">{{.Name}}</span>
                 {{end}}
             </div>
         </div>
         {{end}}
         {{if .Agents}}
         <div class="mt-2">
-            <span class="text-xs text-gray-500">Agents:</span>
+            <span class="text-xs text-soil/60">Agents:</span>
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Agents}}
-                <span class="px-2 py-0.5 rounded-full text-xs bg-cyan-500/10 text-cyan-400">{{.Name}}</span>
+                <span class="px-2 py-0.5 rounded-full text-xs bg-forest-green/10 text-forest-green">{{.Name}}</span>
                 {{end}}
             </div>
         </div>
         {{end}}
-        <div class="mt-3 text-xs text-gray-500" title="{{formatTimestamp .LastSeen}}">
+        <div class="mt-3 text-xs text-soil/60" title="{{formatTimestamp .LastSeen}}">
             Last seen: {{timeAgo .LastSeen}}
         </div>
     </div>
     {{end}}
 </div>
 {{else}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-12 text-center">
     <span class="text-6xl mb-4 block opacity-40">&#x1F333;</span>
-    <h2 class="text-lg font-semibold text-gray-300 mb-2">No lands discovered</h2>
-    <p class="text-gray-500 text-sm">Land nodes will appear here once they register with the forest.</p>
+    <h2 class="text-lg font-semibold text-canopy mb-2">No lands discovered</h2>
+    <p class="text-soil/60 text-sm">Land nodes will appear here once they register with the forest.</p>
 </div>
 {{end}}
 {{end}}
@@ -133,36 +133,36 @@
 <!-- Land Heartbeats Section -->
 {{if .Data.LandNodes}}
 <div class="flex items-center gap-3 mb-4 mt-8">
-    <h2 class="text-lg font-semibold text-cyan-400/60">Land Heartbeats</h2>
-    <code class="text-xs text-cyan-400/60 bg-cyan-400/5 px-2 py-0.5 rounded">forest.land.heartbeat</code>
+    <h2 class="text-lg font-semibold text-canopy/70">Land Heartbeats</h2>
+    <code class="text-xs text-forest-green font-mono bg-forest-green/10 px-2 py-0.5 rounded">forest.land.heartbeat</code>
 </div>
-<p class="text-gray-500 text-xs mb-4 -mt-2">Physical nodes self-reporting runtime metrics</p>
+<p class="text-soil/60 text-xs mb-4 -mt-2">Physical nodes self-reporting runtime metrics</p>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
     {{range .Data.LandNodes}}
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+    <div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="font-semibold text-white">{{.Heartbeat.Hostname}}</h3>
-            <span class="text-xs text-gray-500">{{.Source}}</span>
+            <h3 class="font-semibold text-canopy">{{.Heartbeat.Hostname}}</h3>
+            <span class="text-xs text-soil/60">{{.Source}}</span>
         </div>
         <div class="grid grid-cols-2 gap-3 text-sm">
             <div>
-                <span class="text-gray-500">CPU</span>
-                <div class="text-white">{{.Heartbeat.CPUCores}} cores</div>
+                <span class="text-soil/70">CPU</span>
+                <div class="text-canopy">{{.Heartbeat.CPUCores}} cores</div>
             </div>
             <div>
-                <span class="text-gray-500">RAM Used</span>
-                <div class="text-white">{{.Heartbeat.RAMUsedMB}} / {{.Heartbeat.RAMTotalMB}} MB</div>
+                <span class="text-soil/70">RAM Used</span>
+                <div class="text-canopy">{{.Heartbeat.RAMUsedMB}} / {{.Heartbeat.RAMTotalMB}} MB</div>
             </div>
         </div>
         {{if .Heartbeat.Containers}}
         <div class="mt-3">
-            <span class="text-xs text-gray-500">Containers:</span>
+            <span class="text-xs text-soil/60">Containers:</span>
             <div class="mt-1 space-y-1">
                 {{range .Heartbeat.Containers}}
                 <div class="flex items-center justify-between text-xs">
-                    <span class="text-white">{{.Name}}</span>
-                    <span class="inline-flex items-center gap-1 {{if eq .Status "running"}}text-forest-green{{else}}text-red-400{{end}}">
-                        <span class="w-1.5 h-1.5 rounded-full {{if eq .Status "running"}}bg-forest-green{{else}}bg-red-400{{end}}"></span>
+                    <span class="text-canopy">{{.Name}}</span>
+                    <span class="inline-flex items-center gap-1 {{if eq .Status "running"}}text-forest-green{{else}}text-red-500{{end}}">
+                        <span class="w-1.5 h-1.5 rounded-full {{if eq .Status "running"}}bg-forest-green{{else}}bg-red-500{{end}}"></span>
                         {{.Status}}
                     </span>
                 </div>
@@ -170,17 +170,17 @@
             </div>
         </div>
         {{end}}
-        <div class="mt-3 text-xs text-gray-500" title="{{formatTimestamp .LastSeen}}">Last heartbeat: {{timeAgo .LastSeen}}</div>
+        <div class="mt-3 text-xs text-soil/60" title="{{formatTimestamp .LastSeen}}">Last heartbeat: {{timeAgo .LastSeen}}</div>
     </div>
     {{end}}
 </div>
 {{end}}
 
 {{if and (not .Data.State) (not .Data.LandNodes)}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-12 text-center">
     <span class="text-6xl mb-4 block opacity-40">&#x1F333;</span>
-    <h2 class="text-lg font-semibold text-gray-300 mb-2">No land data received</h2>
-    <p class="text-gray-500 text-sm">Waiting for land heartbeats and viewmodel state...</p>
+    <h2 class="text-lg font-semibold text-canopy mb-2">No land data received</h2>
+    <p class="text-soil/60 text-sm">Waiting for land heartbeats and viewmodel state...</p>
 </div>
 {{end}}
 </div>

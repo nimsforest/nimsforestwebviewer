@@ -1,32 +1,32 @@
 {{define "content"}}
 <div id="dashboard-content" hx-get="/treehouses/{{.Data.Treehouse.Name}}" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="mb-6">
-    <a href="/treehouses" class="text-solar-gold hover:text-solar-gold/80 text-sm">&larr; Back to Treehouses</a>
+    <a href="/treehouses" class="text-solar-gold hover:text-solar-gold-dark text-sm">&larr; Back to Treehouses</a>
 </div>
 
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
     <div class="flex items-center gap-3 mb-4">
         <span class="text-2xl">&#x1F3E0;</span>
-        <h1 class="text-xl font-bold text-white">{{.Data.Treehouse.Name}}</h1>
+        <h1 class="text-xl font-bold text-canopy">{{.Data.Treehouse.Name}}</h1>
         <span class="text-xs text-solar-gold">Treehouse</span>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
         <div>
-            <span class="text-gray-500">RAM Allocated</span>
-            <div class="text-white">{{formatBytes .Data.Treehouse.RAMAllocated}}</div>
+            <span class="text-soil/70">RAM Allocated</span>
+            <div class="text-canopy">{{formatBytes .Data.Treehouse.RAMAllocated}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Land</span>
-            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Treehouse.LandID}}{{end}}</div>
+            <span class="text-soil/70">Land</span>
+            <div class="text-canopy">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Treehouse.LandID}}{{end}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Started</span>
-            <div class="text-white" title="{{formatTimestamp .Data.Treehouse.StartedAt}}">{{timeAgo .Data.Treehouse.StartedAt}}</div>
+            <span class="text-soil/70">Started</span>
+            <div class="text-canopy" title="{{formatTimestamp .Data.Treehouse.StartedAt}}">{{timeAgo .Data.Treehouse.StartedAt}}</div>
         </div>
         {{if .Data.Treehouse.ScriptPath}}
         <div class="col-span-2 sm:col-span-3">
-            <span class="text-gray-500">Script Path</span>
-            <div class="text-white font-mono text-xs">{{.Data.Treehouse.ScriptPath}}</div>
+            <span class="text-soil/70">Script Path</span>
+            <div class="text-canopy font-mono text-xs">{{.Data.Treehouse.ScriptPath}}</div>
         </div>
         {{end}}
     </div>

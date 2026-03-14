@@ -1,38 +1,38 @@
 {{define "content"}}
 <div id="dashboard-content" hx-get="/sources/{{.Data.Source.Name}}" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="mb-6">
-    <a href="/sources" class="text-emerald-400 hover:text-emerald-400/80 text-sm">&larr; Back to Sources</a>
+    <a href="/sources" class="text-forest-green hover:text-forest-green-dark text-sm">&larr; Back to Sources</a>
 </div>
 
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
     <div class="flex items-center gap-3 mb-4">
         <span class="text-2xl">&#x1F4E1;</span>
-        <h1 class="text-xl font-bold text-white">{{.Data.Source.Name}}</h1>
-        <span class="text-xs text-emerald-400">Source</span>
+        <h1 class="text-xl font-bold text-canopy">{{.Data.Source.Name}}</h1>
+        <span class="text-xs text-forest-green">Source</span>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
         <div>
-            <span class="text-gray-500">RAM Allocated</span>
-            <div class="text-white">{{formatBytes .Data.Source.RAMAllocated}}</div>
+            <span class="text-soil/70">RAM Allocated</span>
+            <div class="text-canopy">{{formatBytes .Data.Source.RAMAllocated}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Land</span>
-            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Source.LandID}}{{end}}</div>
+            <span class="text-soil/70">Land</span>
+            <div class="text-canopy">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Source.LandID}}{{end}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Started</span>
-            <div class="text-white" title="{{formatTimestamp .Data.Source.StartedAt}}">{{timeAgo .Data.Source.StartedAt}}</div>
+            <span class="text-soil/70">Started</span>
+            <div class="text-canopy" title="{{formatTimestamp .Data.Source.StartedAt}}">{{timeAgo .Data.Source.StartedAt}}</div>
         </div>
         {{if .Data.Source.SourceType}}
         <div>
-            <span class="text-gray-500">Source Type</span>
-            <div class="text-emerald-400">{{.Data.Source.SourceType}}</div>
+            <span class="text-soil/70">Source Type</span>
+            <div class="text-forest-green">{{.Data.Source.SourceType}}</div>
         </div>
         {{end}}
         {{if .Data.Source.Publishes}}
         <div class="col-span-2 sm:col-span-3">
-            <span class="text-gray-500">Publishes</span>
-            <div class="text-emerald-400 font-mono text-xs">{{.Data.Source.Publishes}}</div>
+            <span class="text-soil/70">Publishes</span>
+            <div class="text-forest-green font-mono text-xs">{{.Data.Source.Publishes}}</div>
         </div>
         {{end}}
     </div>

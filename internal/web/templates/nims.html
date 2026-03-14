@@ -3,8 +3,8 @@
 <div id="dashboard-content" hx-get="/nims" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="flex items-center justify-between mb-8">
     <div>
-        <h1 class="text-2xl font-bold text-white mb-2">&#x1F9D9; Nims</h1>
-        <p class="text-gray-500 text-sm">Business logic handlers — {{if .Data.State}}{{.Data.State.Summary.NimCount}} total{{end}}</p>
+        <h1 class="text-2xl font-bold text-canopy mb-2">&#x1F9D9; Nims</h1>
+        <p class="text-soil/60 text-sm">Business logic handlers — {{if .Data.State}}{{.Data.State.Summary.NimCount}} total{{end}}</p>
     </div>
     {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
 </div>
@@ -13,30 +13,30 @@
 {{if .Data.State.Nims}}
 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
     {{range .Data.State.Nims}}
-    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-life-blue/30 transition-colors block text-center" data-filterable data-name="{{.Name}}">
+    <a href="/nims/{{.Name}}" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors block text-center" data-filterable data-name="{{.Name}}">
         <div class="mb-3">
             <span class="text-5xl">&#x1F9D9;</span>
             {{if .AIEnabled}}
             <div class="mt-1">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400">&#x2728; AI</span>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-solar-gold/10 text-solar-gold">&#x2728; AI</span>
             </div>
             {{end}}
         </div>
-        <h3 class="font-semibold text-white mb-1">{{.Name}}</h3>
-        <div class="text-xs text-life-blue mb-3">Nim</div>
-        <div class="border-t border-forest-green/10 pt-3 space-y-2 text-sm text-left">
+        <h3 class="font-semibold text-canopy mb-1">{{.Name}}</h3>
+        <div class="text-xs text-forest-green mb-3">Nim</div>
+        <div class="border-t border-sprout/30 pt-3 space-y-2 text-sm text-left">
             <div class="flex justify-between">
-                <span class="text-gray-500">RAM</span>
-                <span class="text-white">{{formatBytes .RAMAllocated}}</span>
+                <span class="text-soil/70">RAM</span>
+                <span class="text-canopy">{{formatBytes .RAMAllocated}}</span>
             </div>
             <div class="flex justify-between">
-                <span class="text-gray-500">Started</span>
-                <span class="text-white" title="{{formatTimestamp .StartedAt}}">{{timeAgo .StartedAt}}</span>
+                <span class="text-soil/70">Started</span>
+                <span class="text-canopy" title="{{formatTimestamp .StartedAt}}">{{timeAgo .StartedAt}}</span>
             </div>
             {{if .Model}}
             <div class="flex justify-between">
-                <span class="text-gray-500">Model</span>
-                <span class="text-purple-400">{{.Model}}</span>
+                <span class="text-soil/70">Model</span>
+                <span class="text-solar-gold">{{.Model}}</span>
             </div>
             {{end}}
         </div>
@@ -44,10 +44,10 @@
     {{end}}
 </div>
 {{else}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-12 text-center">
     <span class="text-6xl mb-4 block opacity-40">&#x1F9D9;</span>
-    <h2 class="text-lg font-semibold text-gray-300 mb-2">No nims summoned</h2>
-    <p class="text-gray-500 text-sm">Nims are business logic handlers. They will appear here once deployed to a land node.</p>
+    <h2 class="text-lg font-semibold text-canopy mb-2">No nims summoned</h2>
+    <p class="text-soil/60 text-sm">Nims are business logic handlers. They will appear here once deployed to a land node.</p>
 </div>
 {{end}}
 {{end}}

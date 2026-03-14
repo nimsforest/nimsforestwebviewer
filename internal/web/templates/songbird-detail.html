@@ -1,32 +1,32 @@
 {{define "content"}}
 <div id="dashboard-content" hx-get="/songbirds/{{.Data.Songbird.Name}}" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="mb-6">
-    <a href="/songbirds" class="text-purple-400 hover:text-purple-400/80 text-sm">&larr; Back to Songbirds</a>
+    <a href="/songbirds" class="text-forest-green hover:text-forest-green-dark text-sm">&larr; Back to Songbirds</a>
 </div>
 
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
     <div class="flex items-center gap-3 mb-4">
         <span class="text-2xl">&#x1F426;</span>
-        <h1 class="text-xl font-bold text-white">{{.Data.Songbird.Name}}</h1>
-        <span class="text-xs text-purple-400">Songbird</span>
+        <h1 class="text-xl font-bold text-canopy">{{.Data.Songbird.Name}}</h1>
+        <span class="text-xs text-forest-green">Songbird</span>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
         <div>
-            <span class="text-gray-500">RAM Allocated</span>
-            <div class="text-white">{{formatBytes .Data.Songbird.RAMAllocated}}</div>
+            <span class="text-soil/70">RAM Allocated</span>
+            <div class="text-canopy">{{formatBytes .Data.Songbird.RAMAllocated}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Land</span>
-            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Songbird.LandID}}{{end}}</div>
+            <span class="text-soil/70">Land</span>
+            <div class="text-canopy">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Songbird.LandID}}{{end}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Started</span>
-            <div class="text-white" title="{{formatTimestamp .Data.Songbird.StartedAt}}">{{timeAgo .Data.Songbird.StartedAt}}</div>
+            <span class="text-soil/70">Started</span>
+            <div class="text-canopy" title="{{formatTimestamp .Data.Songbird.StartedAt}}">{{timeAgo .Data.Songbird.StartedAt}}</div>
         </div>
         {{if .Data.Songbird.Listens}}
         <div class="col-span-2 sm:col-span-3">
-            <span class="text-gray-500">Listens</span>
-            <div class="text-purple-400 font-mono text-xs">{{.Data.Songbird.Listens}}</div>
+            <span class="text-soil/70">Listens</span>
+            <div class="text-forest-green font-mono text-xs">{{.Data.Songbird.Listens}}</div>
         </div>
         {{end}}
     </div>

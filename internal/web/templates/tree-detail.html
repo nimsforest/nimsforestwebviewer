@@ -1,27 +1,27 @@
 {{define "content"}}
 <div id="dashboard-content" hx-get="/trees/{{.Data.Tree.Name}}" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="mb-6">
-    <a href="/trees" class="text-forest-green hover:text-forest-green/80 text-sm">&larr; Back to Trees</a>
+    <a href="/trees" class="text-forest-green hover:text-forest-green-dark text-sm">&larr; Back to Trees</a>
 </div>
 
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
     <div class="flex items-center gap-3 mb-4">
         <span class="text-2xl">&#x1F333;</span>
-        <h1 class="text-xl font-bold text-white">{{.Data.Tree.Name}}</h1>
+        <h1 class="text-xl font-bold text-canopy">{{.Data.Tree.Name}}</h1>
         <span class="text-xs text-forest-green">Tree</span>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
         <div>
-            <span class="text-gray-500">RAM Allocated</span>
-            <div class="text-white">{{formatBytes .Data.Tree.RAMAllocated}}</div>
+            <span class="text-soil/70">RAM Allocated</span>
+            <div class="text-canopy">{{formatBytes .Data.Tree.RAMAllocated}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Land</span>
-            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Tree.LandID}}{{end}}</div>
+            <span class="text-soil/70">Land</span>
+            <div class="text-canopy">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Tree.LandID}}{{end}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Started</span>
-            <div class="text-white" title="{{formatTimestamp .Data.Tree.StartedAt}}">{{timeAgo .Data.Tree.StartedAt}}</div>
+            <span class="text-soil/70">Started</span>
+            <div class="text-canopy" title="{{formatTimestamp .Data.Tree.StartedAt}}">{{timeAgo .Data.Tree.StartedAt}}</div>
         </div>
     </div>
 </div>

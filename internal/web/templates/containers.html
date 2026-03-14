@@ -3,40 +3,40 @@
 <div id="dashboard-content" hx-get="/containers" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="flex items-center justify-between mb-8">
     <div>
-        <h1 class="text-2xl font-bold text-white mb-2">Containers</h1>
-        <p class="text-gray-500 text-sm">All containers across land nodes <code class="text-cyan-400/60 bg-cyan-400/5 px-1.5 py-0.5 rounded text-xs">forest.land.heartbeat</code></p>
+        <h1 class="text-2xl font-bold text-canopy mb-2">Containers</h1>
+        <p class="text-soil/60 text-sm">All containers across land nodes <code class="text-forest-green font-mono bg-forest-green/10 px-1.5 py-0.5 rounded text-xs">forest.land.heartbeat</code></p>
     </div>
     {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
 </div>
 
 {{if .Data.LandNodes}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 overflow-hidden">
+<div class="bg-forest-card rounded-xl border border-sprout/30 overflow-hidden">
     <table class="w-full text-sm text-left">
         <thead>
-            <tr class="border-b border-forest-green/10">
-                <th class="px-5 py-3 text-xs text-gray-500 uppercase tracking-wider">Container</th>
-                <th class="px-5 py-3 text-xs text-gray-500 uppercase tracking-wider">Land</th>
-                <th class="px-5 py-3 text-xs text-gray-500 uppercase tracking-wider">Status</th>
-                <th class="px-5 py-3 text-xs text-gray-500 uppercase tracking-wider">Image</th>
-                <th class="px-5 py-3 text-xs text-gray-500 uppercase tracking-wider">Uptime</th>
+            <tr class="border-b border-sprout/30">
+                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Container</th>
+                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Land</th>
+                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Status</th>
+                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Image</th>
+                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Uptime</th>
             </tr>
         </thead>
         <tbody>
             {{range .Data.LandNodes}}
             {{$hostname := .Heartbeat.Hostname}}
             {{range .Heartbeat.Containers}}
-            <tr class="border-b border-forest-green/5 hover:bg-forest-dark/50" data-filterable data-name="{{.Name}} {{$hostname}}">
-                <td class="px-5 py-3 font-medium text-white">{{.Name}}</td>
-                <td class="px-5 py-3 text-gray-400">{{$hostname}}</td>
+            <tr class="border-b border-sprout/20 hover:bg-sprout/10" data-filterable data-name="{{.Name}} {{$hostname}}">
+                <td class="px-5 py-3 font-medium text-canopy">{{.Name}}</td>
+                <td class="px-5 py-3 text-soil">{{$hostname}}</td>
                 <td class="px-5 py-3">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium
-                        {{if eq .Status "running"}}bg-forest-green/10 text-forest-green{{else}}bg-red-500/10 text-red-400{{end}}">
-                        <span class="w-1.5 h-1.5 rounded-full {{if eq .Status "running"}}bg-forest-green animate-pulse{{else}}bg-red-400{{end}}"></span>
+                        {{if eq .Status "running"}}bg-forest-green/10 text-forest-green{{else}}bg-red-500/10 text-red-500{{end}}">
+                        <span class="w-1.5 h-1.5 rounded-full {{if eq .Status "running"}}bg-forest-green animate-pulse{{else}}bg-red-500{{end}}"></span>
                         {{.Status}}
                     </span>
                 </td>
-                <td class="px-5 py-3 text-gray-500 text-xs">{{.Image}}</td>
-                <td class="px-5 py-3 text-gray-400">{{.Uptime}}</td>
+                <td class="px-5 py-3 text-soil/60 text-xs">{{.Image}}</td>
+                <td class="px-5 py-3 text-soil">{{.Uptime}}</td>
             </tr>
             {{end}}
             {{end}}
@@ -44,10 +44,10 @@
     </table>
 </div>
 {{else}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-12 text-center">
     <span class="text-6xl mb-4 block opacity-40">&#x1F4E6;</span>
-    <h2 class="text-lg font-semibold text-gray-300 mb-2">No containers running</h2>
-    <p class="text-gray-500 text-sm">Container data will appear here once land heartbeats are received.</p>
+    <h2 class="text-lg font-semibold text-canopy mb-2">No containers running</h2>
+    <p class="text-soil/60 text-sm">Container data will appear here once land heartbeats are received.</p>
 </div>
 {{end}}
 </div>

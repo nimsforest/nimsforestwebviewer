@@ -2,8 +2,8 @@
 <div id="dashboard-content" hx-get="/infrastructure" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="flex items-center justify-between mb-8">
     <div>
-        <h1 class="text-2xl font-bold text-white mb-2">&#x2699;&#xFE0F; Infrastructure</h1>
-        <p class="text-gray-500 text-sm">Cluster-wide NATS messaging infrastructure</p>
+        <h1 class="text-2xl font-bold text-canopy mb-2">&#x2699;&#xFE0F; Infrastructure</h1>
+        <p class="text-soil/60 text-sm">Cluster-wide NATS messaging infrastructure</p>
     </div>
     {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
 </div>
@@ -11,43 +11,43 @@
 {{if .Data.State}}
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
     <!-- River -->
-    <a href="/infrastructure/river" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-cyan-500/30 transition-colors text-center">
+    <a href="/infrastructure/river" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F30A;</span>
-        <h3 class="font-semibold text-white text-lg mt-2">River</h3>
-        <div class="text-xs text-cyan-400 mt-1">JetStream WorkQueue</div>
-        <div class="text-gray-500 text-xs mt-2">External data stream, 24h retention</div>
+        <h3 class="font-semibold text-canopy text-lg mt-2">River</h3>
+        <div class="text-xs text-forest-green mt-1">JetStream WorkQueue</div>
+        <div class="text-soil/60 text-xs mt-2">External data stream, 24h retention</div>
     </a>
 
     <!-- Wind -->
-    <a href="/infrastructure/wind" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-sky-500/30 transition-colors text-center">
+    <a href="/infrastructure/wind" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F4A8;</span>
-        <h3 class="font-semibold text-white text-lg mt-2">Wind</h3>
-        <div class="text-xs text-sky-400 mt-1">Core Pub/Sub</div>
-        <div class="text-gray-500 text-xs mt-2">Ephemeral leaf transport</div>
+        <h3 class="font-semibold text-canopy text-lg mt-2">Wind</h3>
+        <div class="text-xs text-forest-green mt-1">Core Pub/Sub</div>
+        <div class="text-soil/60 text-xs mt-2">Ephemeral leaf transport</div>
     </a>
 
     <!-- Soil -->
-    <a href="/infrastructure/soil" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-amber-500/30 transition-colors text-center">
+    <a href="/infrastructure/soil" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F4E6;</span>
-        <h3 class="font-semibold text-white text-lg mt-2">Soil</h3>
-        <div class="text-xs text-amber-400 mt-1">KV Bucket</div>
-        <div class="text-gray-500 text-xs mt-2">Shared cluster state</div>
+        <h3 class="font-semibold text-canopy text-lg mt-2">Soil</h3>
+        <div class="text-xs text-solar-gold mt-1">KV Bucket</div>
+        <div class="text-soil/60 text-xs mt-2">Shared cluster state</div>
     </a>
 
     <!-- Humus -->
-    <a href="/infrastructure/humus" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-emerald-500/30 transition-colors text-center">
+    <a href="/infrastructure/humus" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F4DC;</span>
-        <h3 class="font-semibold text-white text-lg mt-2">Humus</h3>
-        <div class="text-xs text-emerald-400 mt-1">JetStream Limits</div>
-        <div class="text-gray-500 text-xs mt-2">Audit log, 7d retention</div>
+        <h3 class="font-semibold text-canopy text-lg mt-2">Humus</h3>
+        <div class="text-xs text-forest-green mt-1">JetStream Limits</div>
+        <div class="text-soil/60 text-xs mt-2">Audit log, 7d retention</div>
     </a>
 </div>
 
 {{else}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-12 text-center">
     <span class="text-6xl mb-4 block opacity-40">&#x2699;&#xFE0F;</span>
-    <h2 class="text-lg font-semibold text-gray-300 mb-2">No infrastructure data</h2>
-    <p class="text-gray-500 text-sm">Infrastructure status will appear once the viewmodel state is received.</p>
+    <h2 class="text-lg font-semibold text-canopy mb-2">No infrastructure data</h2>
+    <p class="text-soil/60 text-sm">Infrastructure status will appear once the viewmodel state is received.</p>
 </div>
 {{end}}
 </div>

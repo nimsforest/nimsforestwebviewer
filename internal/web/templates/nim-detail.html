@@ -1,35 +1,35 @@
 {{define "content"}}
 <div id="dashboard-content" hx-get="/nims/{{.Data.Nim.Name}}" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="mb-6">
-    <a href="/nims" class="text-life-blue hover:text-life-blue/80 text-sm">&larr; Back to Nims</a>
+    <a href="/nims" class="text-forest-green hover:text-forest-green-dark text-sm">&larr; Back to Nims</a>
 </div>
 
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
     <div class="flex items-center gap-3 mb-4">
         <span class="text-2xl">&#x1F9D9;</span>
-        <h1 class="text-xl font-bold text-white">{{.Data.Nim.Name}}</h1>
-        <span class="text-xs text-life-blue">Nim</span>
+        <h1 class="text-xl font-bold text-canopy">{{.Data.Nim.Name}}</h1>
+        <span class="text-xs text-forest-green">Nim</span>
         {{if .Data.Nim.AIEnabled}}
-        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400">&#x2728; AI</span>
+        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-solar-gold/10 text-solar-gold">&#x2728; AI</span>
         {{end}}
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
         <div>
-            <span class="text-gray-500">RAM Allocated</span>
-            <div class="text-white">{{formatBytes .Data.Nim.RAMAllocated}}</div>
+            <span class="text-soil/70">RAM Allocated</span>
+            <div class="text-canopy">{{formatBytes .Data.Nim.RAMAllocated}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Land</span>
-            <div class="text-white">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Nim.LandID}}{{end}}</div>
+            <span class="text-soil/70">Land</span>
+            <div class="text-canopy">{{if .Data.Land}}{{.Data.Land.Hostname}}{{else}}{{.Data.Nim.LandID}}{{end}}</div>
         </div>
         <div>
-            <span class="text-gray-500">Started</span>
-            <div class="text-white" title="{{formatTimestamp .Data.Nim.StartedAt}}">{{timeAgo .Data.Nim.StartedAt}}</div>
+            <span class="text-soil/70">Started</span>
+            <div class="text-canopy" title="{{formatTimestamp .Data.Nim.StartedAt}}">{{timeAgo .Data.Nim.StartedAt}}</div>
         </div>
         {{if .Data.Nim.Model}}
         <div>
-            <span class="text-gray-500">Model</span>
-            <div class="text-purple-400">{{.Data.Nim.Model}}</div>
+            <span class="text-soil/70">Model</span>
+            <div class="text-solar-gold">{{.Data.Nim.Model}}</div>
         </div>
         {{end}}
     </div>

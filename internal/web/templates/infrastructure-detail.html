@@ -1,14 +1,14 @@
 {{define "content"}}
 <div id="dashboard-content" hx-get="/infrastructure/{{if .Data.Infra}}{{.Data.Infra.Slug}}{{end}}" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="mb-6">
-    <a href="/infrastructure" class="text-cyan-400 hover:text-cyan-300 text-sm">&larr; Back to Infrastructure</a>
+    <a href="/infrastructure" class="text-forest-green hover:text-forest-green-dark text-sm">&larr; Back to Infrastructure</a>
 </div>
 
 {{if .Data.Infra}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 mb-6">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-5 mb-6">
     <div class="flex items-center gap-3 mb-4">
         <span class="text-2xl">{{.Data.Infra.Icon}}</span>
-        <h1 class="text-xl font-bold text-white">{{.Data.Infra.Name}}</h1>
+        <h1 class="text-xl font-bold text-canopy">{{.Data.Infra.Name}}</h1>
         <span class="text-xs px-2 py-0.5 rounded-full {{.Data.Infra.BadgeClass}}">{{.Data.Infra.TypeLabel}}</span>
         {{if .Data.Infra.Active}}
         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-forest-green/10 text-forest-green">
@@ -17,54 +17,54 @@
         </span>
         {{end}}
     </div>
-    <p class="text-gray-400 text-sm">{{.Data.Infra.Description}}</p>
+    <p class="text-soil text-sm">{{.Data.Infra.Description}}</p>
 </div>
 
 {{if .Data.Infra.HasMetrics}}
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
     {{if .Data.Infra.ShowMessages}}
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Messages</div>
-        <div class="text-2xl font-bold text-white">{{.Data.Infra.Messages}}</div>
+    <div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
+        <div class="text-xs text-soil/60 uppercase tracking-wider mb-2">Messages</div>
+        <div class="text-2xl font-bold text-canopy">{{.Data.Infra.Messages}}</div>
     </div>
     {{end}}
     {{if .Data.Infra.ShowBytes}}
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Size</div>
-        <div class="text-2xl font-bold text-white">{{formatBytes .Data.Infra.Bytes}}</div>
+    <div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
+        <div class="text-xs text-soil/60 uppercase tracking-wider mb-2">Size</div>
+        <div class="text-2xl font-bold text-canopy">{{formatBytes .Data.Infra.Bytes}}</div>
     </div>
     {{end}}
     {{if .Data.Infra.ShowConsumers}}
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Consumers</div>
-        <div class="text-2xl font-bold text-white">{{.Data.Infra.Consumers}}</div>
+    <div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
+        <div class="text-xs text-soil/60 uppercase tracking-wider mb-2">Consumers</div>
+        <div class="text-2xl font-bold text-canopy">{{.Data.Infra.Consumers}}</div>
     </div>
     {{end}}
     {{if .Data.Infra.ShowKeys}}
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Keys</div>
-        <div class="text-2xl font-bold text-white">{{.Data.Infra.Keys}}</div>
+    <div class="bg-forest-card rounded-xl border border-sprout/30 p-5">
+        <div class="text-xs text-soil/60 uppercase tracking-wider mb-2">Keys</div>
+        <div class="text-2xl font-bold text-canopy">{{.Data.Infra.Keys}}</div>
     </div>
     {{end}}
 </div>
 {{end}}
 
 {{if .Data.Infra.Subjects}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 mb-6">
-    <h2 class="text-sm font-semibold text-white mb-3">Subjects</h2>
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-5 mb-6">
+    <h2 class="text-sm font-semibold text-canopy mb-3">Subjects</h2>
     <div class="flex flex-wrap gap-2">
         {{range .Data.Infra.Subjects}}
-        <span class="text-sm font-mono text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded">{{.}}</span>
+        <span class="text-sm font-mono text-forest-green bg-forest-green/10 px-3 py-1 rounded">{{.}}</span>
         {{end}}
     </div>
 </div>
 {{end}}
 
 {{else}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+<div class="bg-forest-card rounded-xl border border-sprout/30 p-12 text-center">
     <span class="text-6xl mb-4 block opacity-40">&#x2699;&#xFE0F;</span>
-    <h2 class="text-lg font-semibold text-gray-300 mb-2">Component not found</h2>
-    <p class="text-gray-500 text-sm">This infrastructure component could not be found.</p>
+    <h2 class="text-lg font-semibold text-canopy mb-2">Component not found</h2>
+    <p class="text-soil/60 text-sm">This infrastructure component could not be found.</p>
 </div>
 {{end}}
 </div>
