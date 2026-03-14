@@ -14,6 +14,8 @@ github.com/nimsforest/nimsforestwebcomponents v0.7.0 h1:KprcvHAKBSrfOp+hjZW0SP03
 github.com/nimsforest/nimsforestwebcomponents v0.7.0/go.mod h1:jMqHVRjCnb4Bk0gODVS7nP4a5EDFVVi22sFoTix0lAo=
 github.com/nimsforest/nimsforestwebcomponents v0.7.1 h1:Nu7GtNdlmRz9c53EWnMumk/fde/mAhJn+Kfu2qlKotQ=
 github.com/nimsforest/nimsforestwebcomponents v0.7.1/go.mod h1:jMqHVRjCnb4Bk0gODVS7nP4a5EDFVVi22sFoTix0lAo=
+github.com/nimsforest/nimsforestwebcomponents v0.7.2 h1:mvvhhJRK7yEQd/mQmVq+xGx8gjPjaa+CVh81VHSllLY=
+github.com/nimsforest/nimsforestwebcomponents v0.7.2/go.mod h1:jMqHVRjCnb4Bk0gODVS7nP4a5EDFVVi22sFoTix0lAo=
 golang.org/x/crypto v0.48.0 h1:/VRzVqiRSggnhY7gNRxPauEQ5Drw9haKdM0jqfcCFts=
 golang.org/x/crypto v0.48.0/go.mod h1:r0kV5h3qnFPlQnBSrULhlsRfryS2pmewsg+XfMgkVos=
 golang.org/x/sys v0.41.0 h1:Ivj+2Cp/ylzLiEU89QhWblYnOE9zerudt9Ftecq2C6k=
