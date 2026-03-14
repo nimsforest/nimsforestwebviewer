@@ -3,7 +3,7 @@
 <div id="dashboard-content" hx-get="/agents" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
 <div class="flex items-center justify-between mb-8">
     <div>
-        <h1 class="text-2xl font-bold text-white mb-2">&#x1F916; Agents</h1>
+        <h1 class="text-2xl font-bold text-white mb-2">&#x1F9D1;&#x1F916; Agents</h1>
         <p class="text-gray-500 text-sm">Autonomous workers — {{if .Data.State}}{{.Data.State.Summary.AgentCount}} total{{end}}</p>
     </div>
     {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
