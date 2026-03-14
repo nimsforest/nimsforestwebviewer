@@ -55,8 +55,18 @@
         <div class="mt-4">
             {{template "progress-bar" (dict "Percent" .Occupancy "Label" "RAM Usage")}}
         </div>
-        {{if .Trees}}
+        {{if .Sources}}
         <div class="mt-3">
+            <span class="text-xs text-gray-500">Sources:</span>
+            <div class="flex flex-wrap gap-1 mt-1">
+                {{range .Sources}}
+                <span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400">{{.Name}}</span>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{if .Trees}}
+        <div class="mt-2">
             <span class="text-xs text-gray-500">Trees:</span>
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Trees}}
@@ -91,16 +101,6 @@
             <div class="flex flex-wrap gap-1 mt-1">
                 {{range .Songbirds}}
                 <span class="px-2 py-0.5 rounded-full text-xs bg-purple-500/10 text-purple-400">{{.Name}}</span>
-                {{end}}
-            </div>
-        </div>
-        {{end}}
-        {{if .Sources}}
-        <div class="mt-2">
-            <span class="text-xs text-gray-500">Sources:</span>
-            <div class="flex flex-wrap gap-1 mt-1">
-                {{range .Sources}}
-                <span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400">{{.Name}}</span>
                 {{end}}
             </div>
         </div>
