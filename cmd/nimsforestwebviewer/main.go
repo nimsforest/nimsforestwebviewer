@@ -49,7 +49,7 @@ func main() {
 	}
 
 	// Also subscribe to land heartbeats to track land nodes directly
-	_, err = wind.Catch("forest.mycelium.heartbeat.>", func(leaf nim.Leaf) {
+	_, err = wind.Catch("forest.land.heartbeat", func(leaf nim.Leaf) {
 		var hb web.LandHeartbeat
 		if err := json.Unmarshal(leaf.Data, &hb); err != nil {
 			log.Printf("failed to parse heartbeat: %v", err)

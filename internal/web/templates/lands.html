@@ -10,6 +10,13 @@
 </div>
 
 {{if .Data.State}}
+<!-- Forest Viewmodel Section -->
+<div class="flex items-center gap-3 mb-4">
+    <h2 class="text-lg font-semibold text-forest-green/60">Forest Viewmodel</h2>
+    <code class="text-xs text-forest-green/60 bg-forest-green/5 px-2 py-0.5 rounded">forest.viewmodel.state</code>
+</div>
+<p class="text-gray-500 text-xs mb-4 -mt-2">Logical state as seen by the forest orchestrator</p>
+
 {{if .Data.State.Lands}}
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
     {{range .Data.State.Lands}}
@@ -113,9 +120,13 @@
 {{end}}
 {{end}}
 
-<!-- Land heartbeats section -->
+<!-- Land Heartbeats Section -->
 {{if .Data.LandNodes}}
-<h2 class="text-xl font-bold text-white mb-4 mt-8">Land Heartbeats (Direct)</h2>
+<div class="flex items-center gap-3 mb-4 mt-8">
+    <h2 class="text-lg font-semibold text-cyan-400/60">Land Heartbeats</h2>
+    <code class="text-xs text-cyan-400/60 bg-cyan-400/5 px-2 py-0.5 rounded">forest.land.heartbeat</code>
+</div>
+<p class="text-gray-500 text-xs mb-4 -mt-2">Physical nodes self-reporting runtime metrics</p>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
     {{range .Data.LandNodes}}
     <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
