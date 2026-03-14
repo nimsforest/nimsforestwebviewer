@@ -49,54 +49,6 @@
     </a>
 </div>
 
-<!-- Process Names -->
-{{if or .Data.State.Trees .Data.State.Treehouses .Data.State.Nims .Data.State.Songbirds .Data.State.Sources .Data.State.Agents}}
-<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
-    {{range .Data.State.Sources}}
-    <a href="/sources/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-emerald-500/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
-        <span class="text-2xl">&#x1F4E1;</span>
-        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
-        <div class="text-xs text-emerald-400 mt-0.5">Source</div>
-    </a>
-    {{end}}
-    {{range .Data.State.Trees}}
-    <a href="/trees/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-forest-green/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
-        <span class="text-2xl">&#x1F333;</span>
-        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
-        <div class="text-xs text-forest-green mt-0.5">Tree</div>
-    </a>
-    {{end}}
-    {{range .Data.State.Treehouses}}
-    <a href="/treehouses/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-solar-gold/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
-        <span class="text-2xl">&#x1F3E0;</span>
-        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
-        <div class="text-xs text-solar-gold mt-0.5">Treehouse</div>
-    </a>
-    {{end}}
-    {{range .Data.State.Nims}}
-    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-life-blue/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
-        <span class="text-2xl">{{if .AIEnabled}}&#x2728;{{end}}&#x1F9D9;</span>
-        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
-        <div class="text-xs text-life-blue mt-0.5">Nim</div>
-    </a>
-    {{end}}
-    {{range .Data.State.Songbirds}}
-    <a href="/songbirds/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-purple-500/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
-        <span class="text-2xl">&#x1F426;</span>
-        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
-        <div class="text-xs text-purple-400 mt-0.5">Songbird</div>
-    </a>
-    {{end}}
-    {{range .Data.State.Agents}}
-    <a href="/agents" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-cyan-500/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
-        <span class="text-2xl">{{if eq .AgentType "human"}}&#x1F9D1;{{else if eq .AgentType "robot"}}&#x1F916;{{else}}&#x2728;&#x1F916;{{end}}</span>
-        <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
-        <div class="text-xs text-cyan-400 mt-0.5">{{if eq .AgentType "human"}}Human Agent{{else if eq .AgentType "robot"}}Robot Agent{{else}}AI Agent{{end}}</div>
-    </a>
-    {{end}}
-</div>
-{{end}}
-
 <!-- Resources -->
 <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">Resources</h2>
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
