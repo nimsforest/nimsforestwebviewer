@@ -7,13 +7,13 @@ import (
 
 // ForestState mirrors the PublishedState from nimsforest2 viewmodel.
 type ForestState struct {
-	Timestamp  time.Time         `json:"timestamp"`
-	Summary    ForestSummary     `json:"summary"`
-	Lands      []LandVM          `json:"lands"`
-	Trees      []ProcessVM       `json:"trees"`
-	Treehouses []TreehouseVM     `json:"treehouses"`
-	Nims       []NimVM           `json:"nims"`
-	Songbirds  []SongbirdVM      `json:"songbirds"`
+	Timestamp      time.Time           `json:"timestamp"`
+	Summary        ForestSummary       `json:"summary"`
+	Lands          []LandVM            `json:"lands"`
+	Trees          []ProcessVM         `json:"trees"`
+	Treehouses     []TreehouseVM       `json:"treehouses"`
+	Nims           []NimVM             `json:"nims"`
+	Songbirds      []SongbirdVM        `json:"songbirds"`
 	Sources        []SourceVM          `json:"sources"`
 	Infrastructure InfrastructureState `json:"infrastructure"`
 }
@@ -189,6 +189,26 @@ func (s *ForestState) findLandByID(id string) *LandVM {
 	for i := range s.Lands {
 		if s.Lands[i].ID == id {
 			return &s.Lands[i]
+		}
+	}
+	return nil
+}
+
+// FindStream returns the stream with the given name, or nil.
+func (s *ForestState) FindStream(name string) *StreamStatusVM {
+	for i := range s.Infrastructure.Streams {
+		if s.Infrastructure.Streams[i].Name == name {
+			return &s.Infrastructure.Streams[i]
+		}
+	}
+	return nil
+}
+
+// FindKVStore returns the KV store with the given bucket name, or nil.
+func (s *ForestState) FindKVStore(bucket string) *KVStatusVM {
+	for i := range s.Infrastructure.KVStores {
+		if s.Infrastructure.KVStores[i].Bucket == bucket {
+			return &s.Infrastructure.KVStores[i]
 		}
 	}
 	return nil

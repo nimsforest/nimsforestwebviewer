@@ -114,7 +114,7 @@ func (s *Server) handleTreeDetail(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.renderer.Render(w, "tree-detail.html", tree.Name+" - Trees - NimsForest", &DetailData{Dashboard: data, Process: tree, Land: land})
+	s.renderer.Render(w, "tree-detail.html", tree.Name+" - Trees - NimsForest", &DetailData{Dashboard: data, Tree: tree, Land: land})
 }
 
 func (s *Server) handleTreehouses(w http.ResponseWriter, r *http.Request) {
@@ -196,7 +196,7 @@ func (s *Server) handleSourceDetail(w http.ResponseWriter, r *http.Request) {
 // DetailData is passed to detail page templates.
 type DetailData struct {
 	Dashboard *DashboardData
-	Process   *ProcessVM
+	Tree      *ProcessVM
 	Treehouse *TreehouseVM
 	Nim       *NimVM
 	Songbird  *SongbirdVM
@@ -252,17 +252,14 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 			HasMetrics:  true,
 		}
 		if data.State != nil {
-			for _, st := range data.State.Infrastructure.Streams {
-				if st.Name == "RIVER" {
-					vm.ShowMessages = true
-					vm.ShowBytes = true
-					vm.ShowConsumers = true
-					vm.Messages = st.Messages
-					vm.Bytes = st.Bytes
-					vm.Consumers = st.Consumers
-					vm.Subjects = st.Subjects
-					break
-				}
+			if st := data.State.FindStream("RIVER"); st != nil {
+				vm.ShowMessages = true
+				vm.ShowBytes = true
+				vm.ShowConsumers = true
+				vm.Messages = st.Messages
+				vm.Bytes = st.Bytes
+				vm.Consumers = st.Consumers
+				vm.Subjects = st.Subjects
 			}
 		}
 	case "wind":
@@ -285,14 +282,11 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 			HasMetrics:  true,
 		}
 		if data.State != nil {
-			for _, kv := range data.State.Infrastructure.KVStores {
-				if kv.Bucket == "SOIL" {
-					vm.ShowKeys = true
-					vm.ShowBytes = true
-					vm.Keys = kv.Keys
-					vm.Bytes = kv.Bytes
-					break
-				}
+			if kv := data.State.FindKVStore("SOIL"); kv != nil {
+				vm.ShowKeys = true
+				vm.ShowBytes = true
+				vm.Keys = kv.Keys
+				vm.Bytes = kv.Bytes
 			}
 		}
 	case "humus":
@@ -306,17 +300,14 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 			HasMetrics:  true,
 		}
 		if data.State != nil {
-			for _, st := range data.State.Infrastructure.Streams {
-				if st.Name == "HUMUS" {
-					vm.ShowMessages = true
-					vm.ShowBytes = true
-					vm.ShowConsumers = true
-					vm.Messages = st.Messages
-					vm.Bytes = st.Bytes
-					vm.Consumers = st.Consumers
-					vm.Subjects = st.Subjects
-					break
-				}
+			if st := data.State.FindStream("HUMUS"); st != nil {
+				vm.ShowMessages = true
+				vm.ShowBytes = true
+				vm.ShowConsumers = true
+				vm.Messages = st.Messages
+				vm.Bytes = st.Bytes
+				vm.Consumers = st.Consumers
+				vm.Subjects = st.Subjects
 			}
 		}
 	default:
