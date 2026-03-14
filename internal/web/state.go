@@ -15,6 +15,7 @@ type ForestState struct {
 	Nims           []NimVM             `json:"nims"`
 	Songbirds      []SongbirdVM        `json:"songbirds"`
 	Sources        []SourceVM          `json:"sources"`
+	Agents         []AgentVM           `json:"agents"`
 	Infrastructure InfrastructureState `json:"infrastructure"`
 }
 
@@ -29,6 +30,7 @@ type ForestSummary struct {
 	NimCount          int     `json:"NimCount"`
 	SongbirdCount     int     `json:"SongbirdCount"`
 	SourceCount       int     `json:"SourceCount"`
+	AgentCount        int     `json:"AgentCount"`
 	TotalRAMAllocated uint64  `json:"TotalRAMAllocated"`
 	Occupancy         float64 `json:"Occupancy"`
 }
@@ -44,6 +46,7 @@ type LandVM struct {
 	Nims       []NimVM       `json:"nims"`
 	Songbirds  []SongbirdVM  `json:"songbirds"`
 	Sources    []SourceVM    `json:"sources"`
+	Agents     []AgentVM     `json:"agents"`
 	JoinedAt   time.Time     `json:"joined_at"`
 	LastSeen   time.Time   `json:"last_seen"`
 }
@@ -53,7 +56,7 @@ func (l *LandVM) HasMana() bool {
 }
 
 func (l *LandVM) ProcessCount() int {
-	return len(l.Trees) + len(l.Treehouses) + len(l.Nims) + len(l.Songbirds) + len(l.Sources)
+	return len(l.Trees) + len(l.Treehouses) + len(l.Nims) + len(l.Songbirds) + len(l.Sources) + len(l.Agents)
 }
 
 func (l *LandVM) RAMAllocated() uint64 {
@@ -112,6 +115,11 @@ type SourceVM struct {
 	ProcessVM
 	SourceType string `json:"source_type"`
 	Publishes  string `json:"publishes"`
+}
+
+type AgentVM struct {
+	ProcessVM
+	Subscribes string `json:"subscribes"`
 }
 
 // InfrastructureState represents cluster-wide NATS infrastructure.
