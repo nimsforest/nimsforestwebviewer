@@ -1,7 +1,12 @@
 {{define "content"}}
-<div class="mb-8">
-    <h1 class="text-2xl font-bold text-white mb-2">Containers</h1>
-    <p class="text-gray-500 text-sm">All containers across land nodes</p>
+{{template "filter-bar" (dict "Placeholder" "Filter containers...")}}
+<div id="dashboard-content" hx-get="/containers" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-2xl font-bold text-white mb-2">Containers</h1>
+        <p class="text-gray-500 text-sm">All containers across land nodes</p>
+    </div>
+    {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
 </div>
 
 {{if .Data.LandNodes}}
@@ -20,7 +25,7 @@
             {{range .Data.LandNodes}}
             {{$hostname := .Heartbeat.Hostname}}
             {{range .Heartbeat.Containers}}
-            <tr class="border-b border-forest-green/5 hover:bg-forest-dark/50">
+            <tr class="border-b border-forest-green/5 hover:bg-forest-dark/50" data-filterable data-name="{{.Name}} {{$hostname}}">
                 <td class="px-5 py-3 font-medium text-white">{{.Name}}</td>
                 <td class="px-5 py-3 text-gray-400">{{$hostname}}</td>
                 <td class="px-5 py-3">
@@ -39,10 +44,11 @@
     </table>
 </div>
 {{else}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-8 text-center">
-    <span class="text-4xl mb-4 block">&#x1F4E6;</span>
-    <p class="text-gray-400">No container data received yet.</p>
-    <p class="text-gray-500 text-sm mt-2">Waiting for land heartbeats...</p>
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+    <span class="text-6xl mb-4 block opacity-40">&#x1F4E6;</span>
+    <h2 class="text-lg font-semibold text-gray-300 mb-2">No containers running</h2>
+    <p class="text-gray-500 text-sm">Container data will appear here once land heartbeats are received.</p>
 </div>
 {{end}}
+</div>
 {{end}}

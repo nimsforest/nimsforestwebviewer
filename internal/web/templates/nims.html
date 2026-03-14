@@ -1,14 +1,19 @@
 {{define "content"}}
-<div class="mb-8">
-    <h1 class="text-2xl font-bold text-white mb-2">&#x1F9D9; Nims</h1>
-    <p class="text-gray-500 text-sm">Business logic handlers — {{if .Data.State}}{{.Data.State.Summary.NimCount}} total{{end}}</p>
+{{template "filter-bar" (dict "Placeholder" "Filter nims...")}}
+<div id="dashboard-content" hx-get="/nims" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-2xl font-bold text-white mb-2">&#x1F9D9; Nims</h1>
+        <p class="text-gray-500 text-sm">Business logic handlers — {{if .Data.State}}{{.Data.State.Summary.NimCount}} total{{end}}</p>
+    </div>
+    {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
 </div>
 
 {{if .Data.State}}
 {{if .Data.State.Nims}}
 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
     {{range .Data.State.Nims}}
-    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-life-blue/30 transition-colors block text-center">
+    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-5 hover:border-life-blue/30 transition-colors block text-center" data-filterable data-name="{{.Name}}">
         <div class="mb-3">
             <span class="text-5xl">&#x1F9D9;</span>
             {{if .AIEnabled}}
@@ -26,7 +31,7 @@
             </div>
             <div class="flex justify-between">
                 <span class="text-gray-500">Started</span>
-                <span class="text-white">{{timeAgo .StartedAt}}</span>
+                <span class="text-white" title="{{formatTimestamp .StartedAt}}">{{timeAgo .StartedAt}}</span>
             </div>
             {{if .Model}}
             <div class="flex justify-between">
@@ -39,9 +44,12 @@
     {{end}}
 </div>
 {{else}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-8 text-center">
-    <p class="text-gray-400">No nims detected.</p>
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+    <span class="text-6xl mb-4 block opacity-40">&#x1F9D9;</span>
+    <h2 class="text-lg font-semibold text-gray-300 mb-2">No nims summoned</h2>
+    <p class="text-gray-500 text-sm">Nims are business logic handlers. They will appear here once deployed to a land node.</p>
 </div>
 {{end}}
 {{end}}
+</div>
 {{end}}

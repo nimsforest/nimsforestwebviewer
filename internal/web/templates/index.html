@@ -1,34 +1,30 @@
 {{define "content"}}
-<div class="mb-8">
-    <h1 class="text-2xl font-bold text-white mb-2">Forest Overview</h1>
-    {{if not .Data.Connected}}
-    <p class="text-solar-gold text-sm">Waiting for forest state from NATS...</p>
-    {{else}}
-    <p class="text-gray-500 text-sm">Last updated: {{timeAgo .Data.LastUpdated}}</p>
-    {{end}}
+{{template "filter-bar" (dict "Placeholder" "Filter processes...")}}
+<div id="dashboard-content" hx-get="/" hx-trigger="every 5s" hx-swap="outerHTML" hx-select="#dashboard-content">
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-2xl font-bold text-white mb-2">Forest Overview</h1>
+        {{if not .Data.Connected}}
+        <p class="text-solar-gold text-sm">Waiting for forest state from NATS...</p>
+        {{else}}
+        <p class="text-gray-500 text-sm" title="{{formatTimestamp .Data.LastUpdated}}">Last updated: {{timeAgo .Data.LastUpdated}}</p>
+        {{end}}
+    </div>
+    {{template "connection-status" (dict "Connected" .Data.Connected "LastUpdated" .Data.LastUpdated)}}
 </div>
 
 {{if .Data.State}}
 <!-- Summary Stats -->
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+    {{template "stat-card" (dict "Label" "Lands" "Value" (add .Data.State.Summary.LandCount .Data.State.Summary.ManalandCount) "Icon" "\U0001F333" "Color" "text-forest-green")}}
+    {{template "stat-card" (dict "Label" "Manalands" "Value" .Data.State.Summary.ManalandCount "Icon" "\u2728" "Color" "text-solar-gold")}}
+    {{template "stat-card" (dict "Label" "CPU Cores" "Value" .Data.State.Summary.TotalCPUCores "Icon" "\u2699\uFE0F" "Color" "text-white")}}
+    {{template "stat-card" (dict "Label" "Total RAM" "Value" (formatBytes .Data.State.Summary.TotalRAM) "Icon" "\U0001F4BE" "Color" "text-white")}}
     <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Lands</div>
-        <div class="text-2xl font-bold text-forest-green">{{add .Data.State.Summary.LandCount .Data.State.Summary.ManalandCount}}</div>
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Manalands</div>
-        <div class="text-2xl font-bold text-solar-gold">{{.Data.State.Summary.ManalandCount}}</div>
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">CPU Cores</div>
-        <div class="text-2xl font-bold text-white">{{.Data.State.Summary.TotalCPUCores}}</div>
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Total RAM</div>
-        <div class="text-2xl font-bold text-white">{{formatBytes .Data.State.Summary.TotalRAM}}</div>
-    </div>
-    <div class="bg-forest-darker rounded-xl border border-forest-green/10 p-5">
-        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Occupancy</div>
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-lg">&#x1F4CA;</span>
+            <span class="text-xs text-gray-500 uppercase tracking-wider">Occupancy</span>
+        </div>
         <div class="text-2xl font-bold {{if gt .Data.State.Summary.Occupancy 80.0}}text-red-400{{else if gt .Data.State.Summary.Occupancy 60.0}}text-solar-gold{{else}}text-forest-green{{end}}">
             {{printf "%.0f" .Data.State.Summary.Occupancy}}%
         </div>
@@ -73,35 +69,35 @@
 {{if or .Data.State.Trees .Data.State.Treehouses .Data.State.Nims .Data.State.Songbirds .Data.State.Sources}}
 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
     {{range .Data.State.Trees}}
-    <a href="/trees/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-forest-green/30 transition-colors text-center">
+    <a href="/trees/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-forest-green/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
         <span class="text-2xl">&#x1F333;</span>
         <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
         <div class="text-xs text-forest-green mt-0.5">Tree</div>
     </a>
     {{end}}
     {{range .Data.State.Treehouses}}
-    <a href="/treehouses/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-solar-gold/30 transition-colors text-center">
+    <a href="/treehouses/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-solar-gold/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
         <span class="text-2xl">&#x1F3E0;</span>
         <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
         <div class="text-xs text-solar-gold mt-0.5">Treehouse</div>
     </a>
     {{end}}
     {{range .Data.State.Nims}}
-    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-life-blue/30 transition-colors text-center">
+    <a href="/nims/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-life-blue/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
         <span class="text-2xl">{{if .AIEnabled}}&#x2728;{{end}}&#x1F9D9;</span>
         <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
         <div class="text-xs text-life-blue mt-0.5">Nim</div>
     </a>
     {{end}}
     {{range .Data.State.Songbirds}}
-    <a href="/songbirds/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-purple-500/30 transition-colors text-center">
+    <a href="/songbirds/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-purple-500/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
         <span class="text-2xl">&#x1F426;</span>
         <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
         <div class="text-xs text-purple-400 mt-0.5">Songbird</div>
     </a>
     {{end}}
     {{range .Data.State.Sources}}
-    <a href="/sources/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-emerald-500/30 transition-colors text-center">
+    <a href="/sources/{{.Name}}" class="bg-forest-darker rounded-xl border border-forest-green/10 p-4 hover:border-emerald-500/30 transition-colors text-center" data-filterable data-name="{{.Name}}">
         <span class="text-2xl">&#x1F4E1;</span>
         <div class="font-semibold text-white text-sm mt-2">{{.Name}}</div>
         <div class="text-xs text-emerald-400 mt-0.5">Source</div>
@@ -159,7 +155,7 @@
             {{end}}
         </div>
         {{end}}
-        <div class="mt-3 text-xs text-gray-500">
+        <div class="mt-3 text-xs text-gray-500" title="{{formatTimestamp .LastSeen}}">
             Last heartbeat: {{timeAgo .LastSeen}}
         </div>
     </div>
@@ -168,10 +164,15 @@
 {{end}}
 
 {{if and (not .Data.State) (not .Data.LandNodes)}}
-<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-8 text-center">
-    <span class="text-4xl mb-4 block">&#x1F332;</span>
-    <p class="text-gray-400">The forest is quiet. No state received yet.</p>
-    <p class="text-gray-500 text-sm mt-2">Listening on forest.viewmodel.state and forest.mycelium.heartbeat.></p>
+<div class="bg-forest-darker rounded-xl border border-forest-green/10 p-12 text-center">
+    <span class="text-6xl mb-4 block opacity-40">&#x1F332;</span>
+    <h2 class="text-lg font-semibold text-gray-300 mb-2">The forest is quiet</h2>
+    <p class="text-gray-500 text-sm">No state received yet. Waiting for data on:</p>
+    <div class="flex justify-center gap-4 mt-3">
+        <code class="text-xs text-forest-green bg-forest-green/10 px-2 py-1 rounded">forest.viewmodel.state</code>
+        <code class="text-xs text-forest-green bg-forest-green/10 px-2 py-1 rounded">forest.mycelium.heartbeat.&gt;</code>
+    </div>
 </div>
 {{end}}
+</div>
 {{end}}

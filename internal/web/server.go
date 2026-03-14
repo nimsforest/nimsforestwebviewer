@@ -72,6 +72,15 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	s.mux.ServeHTTP(w, r)
 }
 
+// render calls RenderFragment for HTMX requests, Render for full page loads.
+func (s *Server) render(w http.ResponseWriter, r *http.Request, page, title string, data any) {
+	if r.Header.Get("HX-Request") == "true" {
+		s.renderer.RenderFragment(w, page, title, data)
+		return
+	}
+	s.renderer.Render(w, page, title, data)
+}
+
 func (s *Server) dashboardData() *DashboardData {
 	return &DashboardData{
 		State:       s.state.GetState(),
@@ -87,19 +96,19 @@ func (s *Server) handleIndex(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.renderer.Render(w, "index.html", "NimsForest Dashboard", s.dashboardData())
+	s.render(w, r, "index.html", "NimsForest Dashboard", s.dashboardData())
 }
 
 func (s *Server) handleLands(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "lands.html", "Lands - NimsForest", s.dashboardData())
+	s.render(w, r, "lands.html", "Lands - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleContainers(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "containers.html", "Containers - NimsForest", s.dashboardData())
+	s.render(w, r, "containers.html", "Containers - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleTrees(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "trees.html", "Trees - NimsForest", s.dashboardData())
+	s.render(w, r, "trees.html", "Trees - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleTreeDetail(w http.ResponseWriter, r *http.Request) {
@@ -114,11 +123,11 @@ func (s *Server) handleTreeDetail(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.renderer.Render(w, "tree-detail.html", tree.Name+" - Trees - NimsForest", &DetailData{Dashboard: data, Tree: tree, Land: land})
+	s.render(w, r, "tree-detail.html", tree.Name+" - Trees - NimsForest", &DetailData{Dashboard: data, Tree: tree, Land: land})
 }
 
 func (s *Server) handleTreehouses(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "treehouses.html", "Treehouses - NimsForest", s.dashboardData())
+	s.render(w, r, "treehouses.html", "Treehouses - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleTreehouseDetail(w http.ResponseWriter, r *http.Request) {
@@ -133,11 +142,11 @@ func (s *Server) handleTreehouseDetail(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.renderer.Render(w, "treehouse-detail.html", th.Name+" - Treehouses - NimsForest", &DetailData{Dashboard: data, Treehouse: th, Land: land})
+	s.render(w, r, "treehouse-detail.html", th.Name+" - Treehouses - NimsForest", &DetailData{Dashboard: data, Treehouse: th, Land: land})
 }
 
 func (s *Server) handleNims(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "nims.html", "Nims - NimsForest", s.dashboardData())
+	s.render(w, r, "nims.html", "Nims - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleNimDetail(w http.ResponseWriter, r *http.Request) {
@@ -152,11 +161,11 @@ func (s *Server) handleNimDetail(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.renderer.Render(w, "nim-detail.html", nim.Name+" - Nims - NimsForest", &DetailData{Dashboard: data, Nim: nim, Land: land})
+	s.render(w, r, "nim-detail.html", nim.Name+" - Nims - NimsForest", &DetailData{Dashboard: data, Nim: nim, Land: land})
 }
 
 func (s *Server) handleSongbirds(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "songbirds.html", "Songbirds - NimsForest", s.dashboardData())
+	s.render(w, r, "songbirds.html", "Songbirds - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleSongbirdDetail(w http.ResponseWriter, r *http.Request) {
@@ -171,11 +180,11 @@ func (s *Server) handleSongbirdDetail(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.renderer.Render(w, "songbird-detail.html", sb.Name+" - Songbirds - NimsForest", &DetailData{Dashboard: data, Songbird: sb, Land: land})
+	s.render(w, r, "songbird-detail.html", sb.Name+" - Songbirds - NimsForest", &DetailData{Dashboard: data, Songbird: sb, Land: land})
 }
 
 func (s *Server) handleSources(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "sources.html", "Sources - NimsForest", s.dashboardData())
+	s.render(w, r, "sources.html", "Sources - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleSourceDetail(w http.ResponseWriter, r *http.Request) {
@@ -190,7 +199,7 @@ func (s *Server) handleSourceDetail(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.renderer.Render(w, "source-detail.html", src.Name+" - Sources - NimsForest", &DetailData{Dashboard: data, Source: src, Land: land})
+	s.render(w, r, "source-detail.html", src.Name+" - Sources - NimsForest", &DetailData{Dashboard: data, Source: src, Land: land})
 }
 
 // DetailData is passed to detail page templates.
@@ -213,6 +222,7 @@ type InfraDetailData struct {
 // InfraDetailVM holds display data for a single infrastructure component.
 type InfraDetailVM struct {
 	Name         string
+	Slug         string
 	Icon         string
 	TypeLabel    string
 	BadgeClass   string
@@ -231,7 +241,7 @@ type InfraDetailVM struct {
 }
 
 func (s *Server) handleInfrastructure(w http.ResponseWriter, r *http.Request) {
-	s.renderer.Render(w, "infrastructure.html", "Infrastructure - NimsForest", s.dashboardData())
+	s.render(w, r, "infrastructure.html", "Infrastructure - NimsForest", s.dashboardData())
 }
 
 func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Request) {
@@ -244,6 +254,7 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 	case "river":
 		vm = &InfraDetailVM{
 			Name:        "River",
+			Slug:        "river",
 			Icon:        "\U0001F30A",
 			TypeLabel:   "JetStream WorkQueue",
 			BadgeClass:  "bg-cyan-400/10 text-cyan-400",
@@ -265,6 +276,7 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 	case "wind":
 		vm = &InfraDetailVM{
 			Name:        "Wind",
+			Slug:        "wind",
 			Icon:        "\U0001F4A8",
 			TypeLabel:   "Core Pub/Sub",
 			BadgeClass:  "bg-sky-400/10 text-sky-400",
@@ -274,6 +286,7 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 	case "soil":
 		vm = &InfraDetailVM{
 			Name:        "Soil",
+			Slug:        "soil",
 			Icon:        "\U0001F4E6",
 			TypeLabel:   "KV Bucket",
 			BadgeClass:  "bg-amber-400/10 text-amber-400",
@@ -292,6 +305,7 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 	case "humus":
 		vm = &InfraDetailVM{
 			Name:        "Humus",
+			Slug:        "humus",
 			Icon:        "\U0001F4DC",
 			TypeLabel:   "JetStream Limits",
 			BadgeClass:  "bg-emerald-400/10 text-emerald-400",
@@ -315,7 +329,7 @@ func (s *Server) handleInfrastructureDetail(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	s.renderer.Render(w, "infrastructure-detail.html", vm.Name+" - Infrastructure - NimsForest", &InfraDetailData{Dashboard: data, Infra: vm})
+	s.render(w, r, "infrastructure-detail.html", vm.Name+" - Infrastructure - NimsForest", &InfraDetailData{Dashboard: data, Infra: vm})
 }
 
 func (s *Server) handleAPIState(w http.ResponseWriter, r *http.Request) {
