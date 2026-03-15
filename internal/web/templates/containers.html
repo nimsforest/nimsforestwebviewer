@@ -10,15 +10,15 @@
 </div>
 
 {{if .Data.LandNodes}}
-<div class="bg-forest-card rounded-xl border border-sprout/30 overflow-hidden">
+<div class="bg-forest-card rounded-xl border border-sprout/30 overflow-x-auto">
     <table class="w-full text-sm text-left">
         <thead>
             <tr class="border-b border-sprout/30">
                 <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Container</th>
                 <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Land</th>
                 <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Status</th>
-                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Image</th>
-                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider">Uptime</th>
+                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider hidden sm:table-cell">Image</th>
+                <th class="px-5 py-3 text-xs text-soil/60 uppercase tracking-wider hidden sm:table-cell">Uptime</th>
             </tr>
         </thead>
         <tbody>
@@ -35,8 +35,8 @@
                         {{.Status}}
                     </span>
                 </td>
-                <td class="px-5 py-3 text-soil/60 text-xs">{{.Image}}</td>
-                <td class="px-5 py-3 text-soil">{{.Uptime}}</td>
+                <td class="px-5 py-3 text-soil/60 text-xs hidden sm:table-cell">{{.Image}}</td>
+                <td class="px-5 py-3 text-soil hidden sm:table-cell">{{.Uptime}}</td>
             </tr>
             {{end}}
             {{end}}
