@@ -20,19 +20,19 @@ type ForestState struct {
 }
 
 type ForestSummary struct {
-	LandCount         int     `json:"LandCount"`
-	ManalandCount     int     `json:"ManalandCount"`
-	TotalRAM          uint64  `json:"TotalRAM"`
-	TotalCPUCores     int     `json:"TotalCPUCores"`
-	TotalManaVram     uint64  `json:"TotalManaVram"`
-	TreeCount         int     `json:"TreeCount"`
-	TreehouseCount    int     `json:"TreehouseCount"`
-	NimCount          int     `json:"NimCount"`
-	SongbirdCount     int     `json:"SongbirdCount"`
-	SourceCount       int     `json:"SourceCount"`
-	AgentCount        int     `json:"AgentCount"`
-	TotalRAMAllocated uint64  `json:"TotalRAMAllocated"`
-	Occupancy         float64 `json:"Occupancy"`
+	LandCount         int     `json:"land_count"`
+	ManalandCount     int     `json:"manaland_count"`
+	TotalRAM          uint64  `json:"total_ram"`
+	TotalCPUCores     int     `json:"total_cpu_cores"`
+	TotalManaVram     uint64  `json:"total_mana_vram"`
+	TreeCount         int     `json:"tree_count"`
+	TreehouseCount    int     `json:"treehouse_count"`
+	NimCount          int     `json:"nim_count"`
+	SongbirdCount     int     `json:"songbird_count"`
+	SourceCount       int     `json:"source_count"`
+	AgentCount        int     `json:"agent_count"`
+	TotalRAMAllocated uint64  `json:"total_ram_allocated"`
+	Occupancy         float64 `json:"occupancy"`
 }
 
 type LandVM struct {
