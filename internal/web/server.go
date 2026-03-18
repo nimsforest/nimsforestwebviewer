@@ -18,11 +18,12 @@ type Server struct {
 
 // DashboardData is passed to the overview template.
 type DashboardData struct {
-	State       *ForestState
-	LandNodes   []*LandNode
-	LastUpdated time.Time
-	Version     string
-	Connected   bool
+	State                 *ForestState
+	LandNodes             []*LandNode
+	RunningContainerCount int
+	LastUpdated           time.Time
+	Version               string
+	Connected             bool
 }
 
 // NewServer creates a new dashboard HTTP server.
@@ -84,12 +85,25 @@ func (s *Server) render(w http.ResponseWriter, r *http.Request, page, title stri
 }
 
 func (s *Server) dashboardData() *DashboardData {
+	lands := s.state.GetLandNodes()
+	var containerCount int
+	for _, ln := range lands {
+		if ln.Heartbeat == nil {
+			continue
+		}
+		for _, c := range ln.Heartbeat.Containers {
+			if c.Status == "running" {
+				containerCount++
+			}
+		}
+	}
 	return &DashboardData{
-		State:       s.state.GetState(),
-		LandNodes:   s.state.GetLandNodes(),
-		LastUpdated: s.state.LastReceived(),
-		Version:     s.version,
-		Connected:   !s.state.LastReceived().IsZero(),
+		State:                 s.state.GetState(),
+		LandNodes:             lands,
+		RunningContainerCount: containerCount,
+		LastUpdated:           s.state.LastReceived(),
+		Version:               s.version,
+		Connected:             !s.state.LastReceived().IsZero(),
 	}
 }
 

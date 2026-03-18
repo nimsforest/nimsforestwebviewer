@@ -17,36 +17,55 @@
 <!-- Processes -->
 <h2 class="text-sm font-medium text-soil/70 uppercase tracking-wider mb-3">Processes</h2>
 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-8">
+    {{if gt .Data.State.Summary.SourceCount 0}}
     <a href="/sources" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F4E1;</span>
         <div class="text-2xl font-bold text-canopy mt-2">{{.Data.State.Summary.SourceCount}}</div>
         <div class="text-xs text-soil/60 uppercase tracking-wider mt-1">Sources</div>
     </a>
+    {{end}}
+    {{if gt .Data.State.Summary.TreeCount 0}}
     <a href="/trees" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F333;</span>
         <div class="text-2xl font-bold text-canopy mt-2">{{.Data.State.Summary.TreeCount}}</div>
         <div class="text-xs text-soil/60 uppercase tracking-wider mt-1">Trees</div>
     </a>
+    {{end}}
+    {{if gt .Data.State.Summary.TreehouseCount 0}}
     <a href="/treehouses" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F3E0;</span>
         <div class="text-2xl font-bold text-canopy mt-2">{{.Data.State.Summary.TreehouseCount}}</div>
         <div class="text-xs text-soil/60 uppercase tracking-wider mt-1">Treehouses</div>
     </a>
+    {{end}}
+    {{if gt .Data.State.Summary.NimCount 0}}
     <a href="/nims" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F9D9;</span>
         <div class="text-2xl font-bold text-canopy mt-2">{{.Data.State.Summary.NimCount}}</div>
         <div class="text-xs text-soil/60 uppercase tracking-wider mt-1">Nims</div>
     </a>
+    {{end}}
+    {{if gt .Data.State.Summary.SongbirdCount 0}}
     <a href="/songbirds" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F426;</span>
         <div class="text-2xl font-bold text-canopy mt-2">{{.Data.State.Summary.SongbirdCount}}</div>
         <div class="text-xs text-soil/60 uppercase tracking-wider mt-1">Songbirds</div>
     </a>
+    {{end}}
+    {{if gt .Data.State.Summary.AgentCount 0}}
     <a href="/agents" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
         <span class="text-4xl">&#x1F9D1;&#x1F916;</span>
         <div class="text-2xl font-bold text-canopy mt-2">{{.Data.State.Summary.AgentCount}}</div>
         <div class="text-xs text-soil/60 uppercase tracking-wider mt-1">Agents</div>
     </a>
+    {{end}}
+    {{if gt .Data.RunningContainerCount 0}}
+    <a href="/containers" class="bg-forest-card rounded-xl border border-sprout/30 p-5 hover:border-forest-green/50 transition-colors text-center">
+        <span class="text-4xl">&#x1F4E6;</span>
+        <div class="text-2xl font-bold text-canopy mt-2">{{.Data.RunningContainerCount}}</div>
+        <div class="text-xs text-soil/60 uppercase tracking-wider mt-1">Containers</div>
+    </a>
+    {{end}}
 </div>
 
 <!-- Resources -->
