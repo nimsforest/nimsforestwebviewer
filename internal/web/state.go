@@ -3,225 +3,24 @@ package web
 import (
 	"sync"
 	"time"
+
+	vm "github.com/nimsforest/nimsforest2/pkg/viewmodel"
 )
 
-// ForestState mirrors the PublishedState from nimsforest2 viewmodel.
-type ForestState struct {
-	Timestamp      time.Time           `json:"timestamp"`
-	Summary        ForestSummary       `json:"summary"`
-	Lands          []LandVM            `json:"lands"`
-	Trees          []ProcessVM         `json:"trees"`
-	Treehouses     []TreehouseVM       `json:"treehouses"`
-	Nims           []NimVM             `json:"nims"`
-	Songbirds      []SongbirdVM        `json:"songbirds"`
-	Sources        []SourceVM          `json:"sources"`
-	Agents         []AgentVM           `json:"agents"`
-	Infrastructure InfrastructureState `json:"infrastructure"`
-}
-
-type ForestSummary struct {
-	LandCount         int     `json:"land_count"`
-	ManalandCount     int     `json:"manaland_count"`
-	TotalRAM          uint64  `json:"total_ram"`
-	TotalCPUCores     int     `json:"total_cpu_cores"`
-	TotalManaVram     uint64  `json:"total_mana_vram"`
-	TreeCount         int     `json:"tree_count"`
-	TreehouseCount    int     `json:"treehouse_count"`
-	NimCount          int     `json:"nim_count"`
-	SongbirdCount     int     `json:"songbird_count"`
-	SourceCount       int     `json:"source_count"`
-	AgentCount        int     `json:"agent_count"`
-	TotalRAMAllocated uint64  `json:"total_ram_allocated"`
-	Occupancy         float64 `json:"occupancy"`
-}
-
-type LandVM struct {
-	ID         string      `json:"id"`
-	Hostname   string      `json:"hostname"`
-	RAMTotal   uint64      `json:"ram_total"`
-	CPUCores   int         `json:"cpu_cores"`
-	GPUVram    uint64      `json:"gpu_vram"`
-	Trees      []ProcessVM `json:"trees"`
-	Treehouses []TreehouseVM `json:"treehouses"`
-	Nims       []NimVM       `json:"nims"`
-	Songbirds  []SongbirdVM  `json:"songbirds"`
-	Sources    []SourceVM    `json:"sources"`
-	Agents     []AgentVM     `json:"agents"`
-	JoinedAt   time.Time     `json:"joined_at"`
-	LastSeen   time.Time   `json:"last_seen"`
-}
-
-func (l *LandVM) HasMana() bool {
-	return l.GPUVram > 0
-}
-
-func (l *LandVM) ProcessCount() int {
-	return len(l.Trees) + len(l.Treehouses) + len(l.Nims) + len(l.Songbirds) + len(l.Sources) + len(l.Agents)
-}
-
-func (l *LandVM) RAMAllocated() uint64 {
-	var total uint64
-	for _, t := range l.Trees {
-		total += t.RAMAllocated
-	}
-	for _, t := range l.Treehouses {
-		total += t.RAMAllocated
-	}
-	for _, n := range l.Nims {
-		total += n.RAMAllocated
-	}
-	for _, s := range l.Songbirds {
-		total += s.RAMAllocated
-	}
-	for _, s := range l.Sources {
-		total += s.RAMAllocated
-	}
-	return total
-}
-
-func (l *LandVM) Occupancy() float64 {
-	if l.RAMTotal == 0 {
-		return 0
-	}
-	return float64(l.RAMAllocated()) / float64(l.RAMTotal) * 100
-}
-
-type ProcessVM struct {
-	ID           string    `json:"id"`
-	Name         string    `json:"name"`
-	Type         string    `json:"type"`
-	RAMAllocated uint64    `json:"ram_allocated"`
-	LandID       string    `json:"land_id"`
-	StartedAt    time.Time `json:"started_at"`
-}
-
-type TreehouseVM struct {
-	ProcessVM
-	ScriptPath string `json:"script_path"`
-}
-
-type NimVM struct {
-	ProcessVM
-	AIEnabled bool   `json:"ai_enabled"`
-	Model     string `json:"model"`
-}
-
-type SongbirdVM struct {
-	ProcessVM
-	Listens string `json:"listens"`
-}
-
-type SourceVM struct {
-	ProcessVM
-	SourceType string `json:"source_type"`
-	Publishes  string `json:"publishes"`
-}
-
-type AgentVM struct {
-	ProcessVM
-	AgentType  string `json:"agent_type"`
-	Subscribes string `json:"subscribes"`
-}
-
-// InfrastructureState represents cluster-wide NATS infrastructure.
-type InfrastructureState struct {
-	Streams    []StreamStatusVM `json:"streams"`
-	KVStores   []KVStatusVM     `json:"kv_stores"`
-	WindActive bool             `json:"wind_active"`
-}
-
-type StreamStatusVM struct {
-	Name      string   `json:"name"`
-	Subjects  []string `json:"subjects"`
-	Messages  uint64   `json:"messages"`
-	Bytes     uint64   `json:"bytes"`
-	Consumers int      `json:"consumers"`
-}
-
-type KVStatusVM struct {
-	Bucket string `json:"bucket"`
-	Keys   uint64 `json:"keys"`
-	Bytes  uint64 `json:"bytes"`
-}
-
-// FindTree finds a tree by name across all data.
-func (s *ForestState) FindTree(name string) (*ProcessVM, *LandVM) {
-	for i := range s.Trees {
-		if s.Trees[i].Name == name {
-			return &s.Trees[i], s.findLandByID(s.Trees[i].LandID)
-		}
-	}
-	return nil, nil
-}
-
-// FindTreehouse finds a treehouse by name.
-func (s *ForestState) FindTreehouse(name string) (*TreehouseVM, *LandVM) {
-	for i := range s.Treehouses {
-		if s.Treehouses[i].Name == name {
-			return &s.Treehouses[i], s.findLandByID(s.Treehouses[i].LandID)
-		}
-	}
-	return nil, nil
-}
-
-// FindNim finds a nim by name.
-func (s *ForestState) FindNim(name string) (*NimVM, *LandVM) {
-	for i := range s.Nims {
-		if s.Nims[i].Name == name {
-			return &s.Nims[i], s.findLandByID(s.Nims[i].LandID)
-		}
-	}
-	return nil, nil
-}
-
-// FindSongbird finds a songbird by name.
-func (s *ForestState) FindSongbird(name string) (*SongbirdVM, *LandVM) {
-	for i := range s.Songbirds {
-		if s.Songbirds[i].Name == name {
-			return &s.Songbirds[i], s.findLandByID(s.Songbirds[i].LandID)
-		}
-	}
-	return nil, nil
-}
-
-// FindSource finds a source by name.
-func (s *ForestState) FindSource(name string) (*SourceVM, *LandVM) {
-	for i := range s.Sources {
-		if s.Sources[i].Name == name {
-			return &s.Sources[i], s.findLandByID(s.Sources[i].LandID)
-		}
-	}
-	return nil, nil
-}
-
-func (s *ForestState) findLandByID(id string) *LandVM {
-	for i := range s.Lands {
-		if s.Lands[i].ID == id {
-			return &s.Lands[i]
-		}
-	}
-	return nil
-}
-
-// FindStream returns the stream with the given name, or nil.
-func (s *ForestState) FindStream(name string) *StreamStatusVM {
-	for i := range s.Infrastructure.Streams {
-		if s.Infrastructure.Streams[i].Name == name {
-			return &s.Infrastructure.Streams[i]
-		}
-	}
-	return nil
-}
-
-// FindKVStore returns the KV store with the given bucket name, or nil.
-func (s *ForestState) FindKVStore(bucket string) *KVStatusVM {
-	for i := range s.Infrastructure.KVStores {
-		if s.Infrastructure.KVStores[i].Bucket == bucket {
-			return &s.Infrastructure.KVStores[i]
-		}
-	}
-	return nil
-}
+// Type aliases — map local names to the canonical wire types from pkg/viewmodel.
+type ForestState = vm.PublishedState
+type ForestSummary = vm.Summary
+type LandVM = vm.LandViewModel
+type ProcessVM = vm.Process
+type TreeVM = vm.TreeViewModel
+type TreehouseVM = vm.TreehouseViewModel
+type NimVM = vm.NimViewModel
+type SongbirdVM = vm.SongbirdViewModel
+type SourceVM = vm.SourceViewModel
+type AgentVM = vm.AgentViewModel
+type InfrastructureState = vm.Infrastructure
+type StreamStatusVM = vm.StreamStatus
+type KVStatusVM = vm.KVStatus
 
 // LandHeartbeat matches the payload from land's heartbeat.
 type LandHeartbeat struct {
@@ -249,7 +48,7 @@ type HeartbeatContainer struct {
 
 // LandNode represents a land node tracked via heartbeats.
 type LandNode struct {
-	Source     string
+	Source    string
 	Heartbeat *LandHeartbeat
 	LastSeen  time.Time
 }

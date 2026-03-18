@@ -211,7 +211,7 @@ func (s *Server) handleSourceDetail(w http.ResponseWriter, r *http.Request) {
 // DetailData is passed to detail page templates.
 type DetailData struct {
 	Dashboard *DashboardData
-	Tree      *ProcessVM
+	Tree      *TreeVM
 	Treehouse *TreehouseVM
 	Nim       *NimVM
 	Songbird  *SongbirdVM
