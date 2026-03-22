@@ -3,7 +3,7 @@ module github.com/nimsforest/nimsforestwebviewer
 go 1.25.7
 
 require (
-	github.com/nimsforest/nimsforest2 v0.14.5
+	github.com/nimsforest/nimsforest2 v0.18.2
 	github.com/nimsforest/nimsforestwebcomponents v0.7.3
 )
 
