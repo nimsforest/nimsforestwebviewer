@@ -1,22 +1,26 @@
 # Testbook: Hub Forest Dashboard (forest.hub.nimsforest.com)
 
 Validates the forest webviewer on the hub shows correct infrastructure state
-across all pages using headless browser checks.
+across all pages using headless browser checks via PinchTab.
 
 ## Prerequisites
 
 - Hub (land-shared-one) running with nimsforestwebviewer and nimsforestviewmodeltreehouse
-- `npx @browserbasehq/browse-cli` available on neoremote
+- PinchTab running on neoremote (`pinchtab health` returns ok)
 - Dashboard accessible at https://forest.hub.nimsforest.com
+
+## Setup
+
+```bash
+pinchtab health
+pinchtab nav https://forest.hub.nimsforest.com/
+```
 
 ## 1. Overview page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/ — \
-  verify the page title says 'Forest Overview', \
-  there is a 'Processes' section, \
-  there is a 'Resources' section, \
-  and the navigation bar has links for Sources, Trees, Treehouses, Nims, Songbirds, Agents, Lands, Containers, Infrastructure"
+pinchtab nav https://forest.hub.nimsforest.com/
+pinchtab snap -c
 ```
 
 - [ ] Page loads with "Forest Overview" heading
@@ -27,9 +31,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/ — \
 ## 2. Lands page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/lands — \
-  verify the page title says 'Lands', \
-  and check if there is at least one land node listed (look for a card or row with a hostname)"
+pinchtab nav https://forest.hub.nimsforest.com/lands
+pinchtab snap -c
 ```
 
 - [ ] Page loads with "Lands" heading
@@ -38,10 +41,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/lands —
 ## 3. Containers page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/containers — \
-  verify the page shows a list of containers, \
-  and check that these container names are visible: nimsforest, mycelium, landregistry, \
-  hetznertreehouse, pantheon, nimsforestecommerce, nimsforestwebviewer"
+pinchtab nav https://forest.hub.nimsforest.com/containers
+pinchtab snap -c
 ```
 
 - [ ] Page loads with container list
@@ -56,10 +57,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/container
 ## 4. Trees page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/trees — \
-  verify the page loads with a 'Trees' heading. \
-  Trees parse River data into Leaves. There may be trees listed or the page may show zero trees \
-  if the hub forest has no trees configured. Report what you see."
+pinchtab nav https://forest.hub.nimsforest.com/trees
+pinchtab snap -c
 ```
 
 - [ ] Page loads
@@ -67,8 +66,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/trees —
 ## 5. Treehouses page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/treehouses — \
-  verify the page loads with a 'Treehouses' heading. Report any treehouses listed."
+pinchtab nav https://forest.hub.nimsforest.com/treehouses
+pinchtab snap -c
 ```
 
 - [ ] Page loads
@@ -76,8 +75,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/treehouse
 ## 6. Nims page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/nims — \
-  verify the page loads with a 'Nims' heading. Report any nims listed."
+pinchtab nav https://forest.hub.nimsforest.com/nims
+pinchtab snap -c
 ```
 
 - [ ] Page loads
@@ -85,8 +84,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/nims — 
 ## 7. Songbirds page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/songbirds — \
-  verify the page loads with a 'Songbirds' heading. Report any songbirds listed."
+pinchtab nav https://forest.hub.nimsforest.com/songbirds
+pinchtab snap -c
 ```
 
 - [ ] Page loads
@@ -94,8 +93,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/songbirds
 ## 8. Agents page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/agents — \
-  verify the page loads with an 'Agents' heading. Report any agents listed."
+pinchtab nav https://forest.hub.nimsforest.com/agents
+pinchtab snap -c
 ```
 
 - [ ] Page loads
@@ -103,10 +102,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/agents �
 ## 9. Sources page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/sources — \
-  verify the page loads with a 'Sources' heading. \
-  The hub has webhook sources configured (stripe, github, releases, etc). \
-  Check if any sources are listed."
+pinchtab nav https://forest.hub.nimsforest.com/sources
+pinchtab snap -c
 ```
 
 - [ ] Page loads
@@ -115,10 +112,8 @@ npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/sources �
 ## 10. Infrastructure page
 
 ```bash
-npx @browserbasehq/browse-cli "Go to https://forest.hub.nimsforest.com/infrastructure — \
-  verify the page loads with an 'Infrastructure' heading. \
-  This page shows the NimsForest infrastructure components (Wind, River, Soil, Humus, Taproot). \
-  Check that at least Wind and Soil are listed."
+pinchtab nav https://forest.hub.nimsforest.com/infrastructure
+pinchtab snap -c
 ```
 
 - [ ] Page loads
