@@ -47,6 +47,23 @@ func NewServer(state *StateCache, version string) *Server {
 			"infrastructure.html", "infrastructure-detail.html",
 		},
 		nil,
+		nwc.AppConfig{
+			Name:  "Forest",
+			Emoji: "🌲",
+			NavItems: []nwc.NavItem{
+				{Label: "Overview", Href: "/"},
+				{Label: "Sources", Href: "/sources"},
+				{Label: "Trees", Href: "/trees"},
+				{Label: "Treehouses", Href: "/treehouses"},
+				{Label: "Nims", Href: "/nims"},
+				{Label: "Songbirds", Href: "/songbirds"},
+				{Label: "Agents", Href: "/agents"},
+				{Label: "Lands", Href: "/lands"},
+				{Label: "Containers", Href: "/containers"},
+				{Label: "Infrastructure", Href: "/infrastructure"},
+			},
+			Footer: "NimsForest Dashboard · Live updates via HTMX",
+		},
 	)
 
 	s.mux.Handle("GET /static/", http.StripPrefix("/static/", nwc.StaticHandler()))

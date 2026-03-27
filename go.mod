@@ -4,7 +4,7 @@ go 1.25.7
 
 require (
 	github.com/nimsforest/nimsforest2 v0.18.2
-	github.com/nimsforest/nimsforestwebcomponents v0.7.3
+	github.com/nimsforest/nimsforestwebcomponents v0.8.0
 )
 
 require (
