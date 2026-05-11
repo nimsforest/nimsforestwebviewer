@@ -37,8 +37,17 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: release
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
+
+      - name: Login to registry.nimsforest.com via GitHub OIDC
+        run: |
+          OIDC=$(curl -sfH "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=registry.nimsforest.com" | jq -r '.value')
+          echo "$OIDC" | docker login registry.nimsforest.com -u oidc --password-stdin
 
       - name: Build and push Docker image
         run: |
